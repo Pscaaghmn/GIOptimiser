@@ -47,17 +47,20 @@ public class Artifact extends Equipment{
 
     public Artifact(String attRecord, String valRecord) {
         //Constructor using record string
-        int[] attFieldWidths = new int[]{30, 1, 1, 1, 1, 1, 1, 2};
-        int[] valFieldWidths = new int[]{4, 4, 4, 4};
+        int[] attFieldWidths = new int[]{30, 2, 2, 2, 2, 2, 2, 2};
+        int[] valFieldWidths = new int[]{4, 4, 4, 4, 4};
 
         String[] attFields = Database.recordToArray(attRecord, attFieldWidths);
         double[] valFields = Arrays.stream(Database.recordToArray(valRecord, valFieldWidths)).mapToDouble(Double::parseDouble).toArray();
 
         //Setting the foundations (i.e. what the attributes actually are)
         set = attFields[0].trim();
-        piece = Integer.parseInt(attFields[1]);
-        primaryAttribute = Equipment.strAttToInt(attFields[2]);
-        secondaryAttributes = Equipment.strAttToInt(Arrays.copyOfRange(attFields, 3, 6));
+        piece = Integer.parseInt(attFields[1].trim());
+        primaryAttribute = Integer.parseInt(attFields[2].trim());
+        secondaryAttributes = new int[4];
+        for (int i = 0; i < 4; i++) {
+            secondaryAttributes[i] = Integer.parseInt(attFields[3 + i].trim());
+        }
         level = Integer.parseInt(attFields[7].trim());
 
         //Assigning the values to the attributes
@@ -66,18 +69,20 @@ public class Artifact extends Equipment{
     }
 
     public String toString(Boolean isAttribute){
+        int[] attFieldWidths = new int[]{30, 2, 2, 2, 2, 2, 2, 2};
+        int[] valFieldWidths = new int[]{4, 4, 4, 4, 4};
         //Converts artifact data into a record format
         StringBuilder finalRecord = new StringBuilder();
 
         if (isAttribute) {
             //If using the attribute files
-
+            //TODO: Take totalLen from field width arrays
             finalRecord.append(Database.pad(set, 30));
-            finalRecord.append(Database.pad(String.valueOf(piece), 1));
+            finalRecord.append(Database.pad(String.valueOf(piece), 2));
 
-            finalRecord.append(Database.pad(primaryAttribute, 4));
+            finalRecord.append(Database.pad(primaryAttribute, 2));
             for (int i = 0; i < 4; i++) {
-                finalRecord.append(Database.pad(secondaryAttributes[i], 4));
+                finalRecord.append(Database.pad(secondaryAttributes[i], 2));
             }
 
             finalRecord.append(Database.pad(String.valueOf(level), 2));
@@ -93,12 +98,16 @@ public class Artifact extends Equipment{
         return finalRecord.toString();
     }
 
-    public void display() {
+    @Override
+    public void display(){
         System.out.println(set);
         System.out.println(new String[]{"Flower of Life", "Plume of Death", "Sands of Eon", "Goblet of Eonothem", "Circlet of Logos"}[piece]);
 
+        super.display();
         for (int i = 0; i < secondaryValues.length; i++) {
-            System.out.println(secondaryAttributes[i] + ": " + secondaryValues[i]);
+            if (secondaryAttributes[i] != -1){
+                System.out.println("\u001B[35m" + Equipment.intAttToStr(secondaryAttributes[i]) + ": " + secondaryValues[i] + "\u001B[0m");
+            }
         }
     }
 }

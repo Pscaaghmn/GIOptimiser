@@ -18,7 +18,7 @@ public class Database {
     public void appendRecord(String data) {
         //Adds a record to the end of the database
         if (data.length() > lineLength) {
-            System.out.println("Could not append data. String too long.");
+            System.out.println("Could not append data. String too long. Data length " + data.length() + " is longer than " + lineLength);
         } else {
             FileHandler.fileWrite(filename,-1, String.format("%1$-" + lineLength + "s", data)+ "\r\n");
             recordCount++;
@@ -84,7 +84,7 @@ public class Database {
     public static String pad(String data, int totalLen){
         //Pad field to correct length
         if (data.length() > totalLen) {
-            System.out.println("String could not be padded (too long)");
+            System.out.println("String could not be padded (too long). '" + data + "' exceeds length of " + totalLen);
             return "";
         } else {
             return String.format("%1$-" + totalLen + "s", data);
