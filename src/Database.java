@@ -91,8 +91,4 @@ public class Database {
         }
     }
 
-    public static String pad(int data, int totalLen){
-        //Accepting int data (then converting it)
-        return pad(String.valueOf(data), totalLen);
-    }
 }
