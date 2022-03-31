@@ -13,7 +13,16 @@ public class Equipment {
 
     public static int strAttToInt(String attribute){
         //Single string
-        return Arrays.asList(attAbbreviations).indexOf(attribute);
+        int i = 0;
+        while (i < attAbbreviations.length){
+            //Allowing the user input to be slightly different to what is standard
+            //TODO: Make contains() a separate method
+            if(attribute.trim().toUpperCase().contains(attAbbreviations[i])){
+                return i;
+            }
+            i++;
+        }
+        return -1;
     }
 
     public static int[] strAttToInt(String[] attributes){
