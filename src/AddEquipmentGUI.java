@@ -10,9 +10,9 @@ public class AddEquipmentGUI extends GUI{
 
     public AddEquipmentGUI(int width, int height, boolean isArtifact) {
         super(width, height);
-        label1 = new JLabel("Artifact Set:");
-        comboBox = new JComboBox<>(new String[]{"Gladiator's Finale", "Wanderer's Troupe", "Thundersoother", "Thundering Fury", "Maiden Beloved", "Viridescent Venerer", "Crimson Witch of Flames", "Lavawalker", "Noblesse Oblige", "Bloodstained Chivalry", "Archaic Petra", "Retracing Bolide", "Blizzard Strayer", "Heart of Depth", "Tenacity of the Millelith", "Pale Flame", "Shimenawa's Reminiscence", "Emblem of Severed Fate", "Husk of Opulent Dreams", "Ocean-Hued Clam", "Vermillion Hereafter", "Echoes of an Offering"});
-        label2 = new JLabel("Level:");
+        nameLabel = new JLabel(isArtifact ? "Artifact Set:" : "Weapon Name:");
+        nameComboBox = new JComboBox<>(new String[]{"Gladiator's Finale", "Wanderer's Troupe", "Thundersoother", "Thundering Fury", "Maiden Beloved", "Viridescent Venerer", "Crimson Witch of Flames", "Lavawalker", "Noblesse Oblige", "Bloodstained Chivalry", "Archaic Petra", "Retracing Bolide", "Blizzard Strayer", "Heart of Depth", "Tenacity of the Millelith", "Pale Flame", "Shimenawa's Reminiscence", "Emblem of Severed Fate", "Husk of Opulent Dreams", "Ocean-Hued Clam", "Vermillion Hereafter", "Echoes of an Offering"});
+        levelLabel = new JLabel("Level:");
         slider = new JSlider(JSlider.HORIZONTAL,1, 20, 20);
         Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
         labelTable.put(1, new JLabel("1"));
