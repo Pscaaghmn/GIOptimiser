@@ -69,6 +69,7 @@ public class Artifact extends Equipment{
     }
 
     public String toString(Boolean isAttribute){
+        //Converting Artifact data to database format
         int[] attFieldWidths = new int[]{30, 2, 2, 2, 2, 2, 2, 2};
         String[] connectedAttData = new String[]
                 {set,
