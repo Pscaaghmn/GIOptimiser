@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Hashtable;
 
-public class AddEquipmentGUI extends GUI implements ActionListener, DocumentListener {
+public class AddEquipmentGUI extends JPanel implements ActionListener, DocumentListener {
 
     private JLabel nameLabel;
     private JLabel levelLabel;
