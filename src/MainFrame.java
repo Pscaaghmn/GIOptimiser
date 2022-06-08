@@ -5,7 +5,7 @@ public class MainFrame extends JFrame{
     JPanel[] allPanels;
 
     public MainFrame(){
-        allPanels = new JPanel[12];
+        allPanels = new JPanel[3];
         allPanels[0] = new MainMenuGUI();
         allPanels[1] = new ArtifactInventory();
         allPanels[2] = new WeaponInventory();
@@ -17,6 +17,8 @@ public class MainFrame extends JFrame{
 
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLayout(null);
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public void navigate(int hidePanel, int showPanel){
