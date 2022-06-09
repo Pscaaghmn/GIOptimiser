@@ -1,11 +1,18 @@
+import javax.swing.*;
+import java.awt.*;
+
 public class Main {
 
     public static void main(String[] args) {
 
         MainFrame mf = new MainFrame();
+        mf.setBounds(0,0, 1500, 800);
+        mf.setPreferredSize(new Dimension(1500,800));
+        mf.setResizable(true);
         mf.setVisible(true);
+
 /* ------------------------------------------------------------------------------------------------------------------------------------------
-        //   "\\\\bex-file-01\\studenthome$\\16\\16Huynh_S\\Genshin Optimiser\\Artifact Inventory\\artifact_att.txt"
+        //  "\\\\bex-file-01\\studenthome$\\16\\16Huynh_S\\Genshin Optimiser\\Artifact Inventory\\artifact_att.txt"
         //  "C:\\Users\\Sam\\Documents\\Genshin Optimiser\\Artifact Inventory\\artifact_att.txt"
         Database artifactAttributes = new Database("C:\\Users\\Sam\\Documents\\Genshin Optimiser\\Artifact Inventory\\artifact_att.txt", 44);
 

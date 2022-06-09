@@ -10,13 +10,15 @@ public class MainFrame extends JFrame{
         allPanels[1] = new ArtifactInventory();
         allPanels[2] = new WeaponInventory();
 
-        for (int i = 0; i < allPanels.length; i++) {
-            this.add(allPanels[i]);
-            allPanels[i].setVisible((i == 0));
-        }
-
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLayout(null);
+
+        for (int i = 0; i < allPanels.length; i++) {
+            allPanels[i].setBounds(0,0,1500, 800);
+            allPanels[i].setPreferredSize(this.getPreferredSize());
+
+            this.add(allPanels[i]);
+            allPanels[i].setVisible(i == 0);
+        }
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }

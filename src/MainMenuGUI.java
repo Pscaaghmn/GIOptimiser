@@ -5,34 +5,23 @@ import java.awt.event.ActionListener;
 
 public class MainMenuGUI extends JPanel implements ActionListener {
 
-    private final int VIEW_INVENTORY_BUTTON = 0;
-    private JLabel title;
-    private JButton viewInventory;
-    private JButton calculateArtifact;
-    private JButton calculateTime;
-
     public MainMenuGUI(){
-        title = new JLabel("Genshin Impact Optimiser");
-        title.setBounds(50,10, 500,250);
+        JLabel title = new JLabel("Genshin Impact Optimiser");
+        JButton viewInventory = new JButton("View Inventory");
+        JButton calculateArtifact = new JButton("Calculate predicted Artifact with time or resin");
+        JButton calculateTime = new JButton("Calculate predicted time or resin");
 
-        viewInventory = new JButton("View Inventory");
-        viewInventory.setBounds(0,400, 300,250);
+        title.setBounds(475,150,500,100);
+        viewInventory.setBounds(125,500,300,100);
+        calculateArtifact.setBounds(525,500,300,100);
+        calculateTime.setBounds(925,500,300,100);
 
-        calculateArtifact = new JButton("View Inventory");
-        calculateArtifact.setBounds(300,400, 300,250);
+        this.setLayout(null);
 
-        calculateTime = new JButton("View Inventory");
-        calculateTime.setBounds(600,400, 300,250);
-
-        this.setBounds(0,0,1500, 800);
-
-        GridLayout layout = new GridLayout(0,3);
-        setLayout(layout);
-
-        add(title);
-        add(viewInventory);
-        add(calculateArtifact);
-        add(calculateTime);
+        this.add(title);
+        this.add(viewInventory);
+        this.add(calculateArtifact);
+        this.add(calculateTime);
     }
 
     @Override
