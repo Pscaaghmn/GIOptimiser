@@ -16,6 +16,9 @@ public class MainMenuGUI extends JPanel implements ActionListener {
         calculateArtifact.setBounds(525,500,300,100);
         calculateTime.setBounds(925,500,300,100);
 
+        viewInventory.addActionListener(this);
+        calculateArtifact.addActionListener(this);
+        calculateTime.addActionListener(this);
         this.setLayout(null);
 
         this.add(title);
@@ -26,6 +29,17 @@ public class MainMenuGUI extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        String event = e.getActionCommand();
+        switch (event){
+            case "View Inventory":
 
+                break;
+            case "Calculate predicted Artifact with time or resin":
+
+                break;
+            case "Calculate predicted time or resin":
+
+                break;
+        }
     }
 }
