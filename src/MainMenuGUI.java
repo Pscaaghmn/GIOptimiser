@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -29,16 +28,18 @@ public class MainMenuGUI extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String event = e.getActionCommand();
-        switch (event){
+
+        switch (e.getActionCommand()){
             case "View Inventory":
-
+                MainFrame.navigate(0,1);
                 break;
+
             case "Calculate predicted Artifact with time or resin":
-
+                MainFrame.navigate(0,3);
                 break;
-            case "Calculate predicted time or resin":
 
+            case "Calculate predicted time or resin":
+                MainFrame.navigate(0,4);
                 break;
         }
     }

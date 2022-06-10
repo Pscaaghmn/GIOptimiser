@@ -73,6 +73,7 @@ public class Equipment {
     }
 
     public static String intAttToStr(int attribute){
+        String[] attAbbreviations = new String[]{"ATK", "ATK%", "DEF", "DEF%", "HP", "HP%", "Crit Rate", "Crit Damage", "Elemental Mastery", "Energy Recharge", "Healing Bonus", "Physical DMG Bonus", "Pyro DMG Bonus", "Electro DMG Bonus", "Cryo DMG Bonus", "Hydro DMG Bonus", "Anemo DMG Bonus", "Geo DMG Bonus", "Dendro DMG Bonus"};
         return (attribute == -1 ? "" : attAbbreviations[attribute]);
     }
 

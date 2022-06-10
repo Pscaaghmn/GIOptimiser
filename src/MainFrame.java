@@ -1,14 +1,17 @@
 import javax.swing.*;
-import java.awt.*;
 
 public class MainFrame extends JFrame{
-    JPanel[] allPanels;
+    private static JPanel[] allPanels;
 
     public MainFrame(){
-        allPanels = new JPanel[3];
+        allPanels = new JPanel[5];
         allPanels[0] = new MainMenuGUI();
-        allPanels[1] = new ArtifactInventory();
-        allPanels[2] = new WeaponInventory();
+
+        allPanels[1] = new ArtifactInventoryGUI();
+        allPanels[2] = new WeaponInventoryGUI();
+
+        allPanels[3] = new CalculateArtifactGUI();
+        allPanels[4] = new CalculateTimeGUI();
 
         setLayout(null);
 
@@ -23,7 +26,7 @@ public class MainFrame extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public void navigate(int hidePanel, int showPanel){
+    public static void navigate(int hidePanel, int showPanel){
         allPanels[hidePanel].setVisible(false);
         allPanels[showPanel].setVisible(true);
     }
