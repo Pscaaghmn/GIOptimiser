@@ -3,8 +3,9 @@ import java.awt.*;
 public class Main {
 
     public static void main(String[] args) {
+        String filePath = "D:\\Java Projects\\GIOptimiser\\";
 
-        MainFrame mf = new MainFrame();
+        MainFrame mf = new MainFrame(filePath);
         mf.setBounds(0,0, 1500, 800);
         mf.setPreferredSize(new Dimension(1500,800));
         mf.setResizable(true);
@@ -31,7 +32,7 @@ public class Main {
         Database bowNames = new Database("\\\\bex-file-01\\studenthome$\\16\\16Huynh_S\\Genshin Optimiser\\Equipment Names\\weapons\\bows.txt", 40);
         Database catalystNames = new Database("\\\\bex-file-01\\studenthome$\\16\\16Huynh_S\\Genshin Optimiser\\Equipment Names\\weapons\\catalysts.txt", 40);
 
-        //Storing an arbitrary artifact
+        //Storing an arbitrary artifact:
         Artifact testArtifact = new Artifact("Husk of Opulent Dreams", 3, "DEF%", new String[]{"ATK%", "CD", "CR", ""}, new double[]{4.7, 6.2, 3.5, 0}, 1);
         artifactAttributes.appendRecord(testArtifact.toString(true));
         artifactValues.appendRecord(testArtifact.toString(false));

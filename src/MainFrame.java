@@ -3,15 +3,17 @@ import javax.swing.*;
 public class MainFrame extends JFrame{
     private static JPanel[] allPanels;
 
-    public MainFrame(){
-        allPanels = new JPanel[5];
+    public MainFrame(String filePath){
+        allPanels = new JPanel[7];
         allPanels[0] = new MainMenuGUI();
 
-        allPanels[1] = new ArtifactInventoryGUI();
-        allPanels[2] = new WeaponInventoryGUI();
+        allPanels[1] = new InventoryGUI(true, filePath);
+        allPanels[2] = new InventoryGUI(false, filePath);
+        allPanels[3] = new AddEquipmentGUI(true);
+        allPanels[4] = new AddEquipmentGUI(false);
 
-        allPanels[3] = new CalculateArtifactGUI();
-        allPanels[4] = new CalculateTimeGUI();
+        allPanels[5] = new CalculateArtifactGUI();
+        allPanels[6] = new CalculateTimeGUI();
 
         setLayout(null);
 
