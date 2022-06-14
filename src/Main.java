@@ -3,7 +3,7 @@ import java.awt.*;
 public class Main {
 
     public static void main(String[] args) {
-        String filePath = "D:\\Java Projects\\GIOptimiser\\";
+        String filePath = (true?"D:\\Java Projects\\GIOptimiser\\":"");
 
         MainFrame mf = new MainFrame(filePath);
         mf.setBounds(0,0, 1500, 800);
