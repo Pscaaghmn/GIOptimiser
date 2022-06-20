@@ -47,6 +47,7 @@ public class InventoryGUI extends JPanel implements ActionListener {
         compareItemsButton.setBounds(1100,700,100,50);
         sortOptions.setBounds(0,700,200,50);
         for (int i = 0; i < 6; i++) {
+            itemDetails[i] = new JLabel();
             itemDetails[i].setBounds(900,100 + (i*50),200,50);
             this.add(itemDetails[i]);
         }
