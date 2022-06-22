@@ -18,7 +18,7 @@ public class MainFrame extends JFrame{
         setLayout(null);
 
         for (int i = 0; i < allPanels.length; i++) {
-            allPanels[i].setBounds(0,0,1500, 800);
+            allPanels[i].setBounds(this.getBounds());
             allPanels[i].setPreferredSize(this.getPreferredSize());
 
             this.add(allPanels[i]);

@@ -4,10 +4,12 @@ public class Main {
 
     public static void main(String[] args) {
         String filePath = (false?"D:\\Java Projects\\GIOptimiser\\":"C:\\Users\\16huynh_s\\IdeaProjects\\GIOptimiser\\src\\");
+        int maxHeight = 700;
+
 
         MainFrame mf = new MainFrame(filePath);
-        mf.setBounds(0,0, 1500, 800);
-        mf.setPreferredSize(new Dimension(1500,800));
+        mf.setBounds(0,0, 1500, maxHeight);
+        mf.setPreferredSize(new Dimension(1500,maxHeight));
         mf.setResizable(true);
         mf.setVisible(true);
 
