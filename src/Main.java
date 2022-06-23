@@ -8,10 +8,7 @@ public class Main {
 
 
         MainFrame mf = new MainFrame(filePath);
-        mf.setBounds(0,0, 1500, maxHeight);
-        mf.setPreferredSize(new Dimension(1500,maxHeight));
-        mf.setResizable(true);
-        mf.setVisible(true);
+
 
 /* ------------------------------------------------------------------------------------------------------------------------------------------
         //  "\\\\bex-file-01\\studenthome$\\16\\16Huynh_S\\Genshin Optimiser\\Artifact Inventory\\artifact_att.txt"

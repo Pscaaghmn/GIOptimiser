@@ -1,9 +1,16 @@
 import javax.swing.*;
+import java.awt.*;
 
 public class MainFrame extends JFrame{
     private static JPanel[] allPanels;
 
     public MainFrame(String filePath){
+        int maxHeight = 700;
+
+        setBounds(0,0, 1500, maxHeight);
+        setPreferredSize(new Dimension(1500,maxHeight));
+        setResizable(true);
+
         allPanels = new JPanel[7];
         allPanels[0] = new MainMenuGUI();
 
@@ -18,13 +25,14 @@ public class MainFrame extends JFrame{
         setLayout(null);
 
         for (int i = 0; i < allPanels.length; i++) {
+            this.add(allPanels[i]);
             allPanels[i].setBounds(this.getBounds());
             allPanels[i].setPreferredSize(this.getPreferredSize());
 
-            this.add(allPanels[i]);
             allPanels[i].setVisible(i == 0);
         }
 
+        setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
