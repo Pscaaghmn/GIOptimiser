@@ -8,7 +8,6 @@ public class MainFrame extends JFrame{
         int maxHeight = 700;
 
         setBounds(0,0, 1500, maxHeight);
-        setPreferredSize(new Dimension(1500,maxHeight));
         setResizable(true);
 
         allPanels = new JPanel[7];
@@ -26,8 +25,7 @@ public class MainFrame extends JFrame{
 
         for (int i = 0; i < allPanels.length; i++) {
             this.add(allPanels[i]);
-            allPanels[i].setBounds(this.getBounds());
-            allPanels[i].setPreferredSize(this.getPreferredSize());
+            allPanels[i].setBounds(new Rectangle(0,0,1500,maxHeight));
 
             allPanels[i].setVisible(i == 0);
         }
