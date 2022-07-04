@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 public class MainMenuGUI extends JPanel implements ActionListener {
 
     public MainMenuGUI(){
-        System.out.println(this.getBounds());
         JLabel title = new JLabel("Genshin Impact Optimiser");
         JButton viewInventory = new JButton("View Inventory");
         JButton calculateArtifact = new JButton("Calculate predicted Artifact with time or resin");

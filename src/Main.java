@@ -1,13 +1,16 @@
+import javax.xml.crypto.Data;
 import java.awt.*;
 
 public class Main {
 
     public static void main(String[] args) {
-        String filePath = (false?"D:\\Java Projects\\GIOptimiser\\":"C:\\Users\\16huynh_s\\IdeaProjects\\GIOptimiser\\src\\");
+        //String filePath = (false?"D:\\Java Projects\\GIOptimiser\\":"C:\\Users\\16huynh_s\\IdeaProjects\\GIOptimiser\\src\\");
 
-        MainFrame mf = new MainFrame(filePath);
+        //MainFrame mf = new MainFrame(filePath);
 
-
+        Database test = new Database("C:\\Users\\16huynh_s\\IdeaProjects\\GIOptimiser\\src\\artifact_att.txt",44);
+        System.out.println(test.getRecordCount());
+        System.out.println(test.getRecord(0));
 /* ------------------------------------------------------------------------------------------------------------------------------------------
         //  "\\\\bex-file-01\\studenthome$\\16\\16Huynh_S\\Genshin Optimiser\\Artifact Inventory\\artifact_att.txt"
         //  "C:\\Users\\Sam\\Documents\\Genshin Optimiser\\Artifact Inventory\\artifact_att.txt"
@@ -28,13 +31,6 @@ public class Main {
         Database polearmNames = new Database("\\\\bex-file-01\\studenthome$\\16\\16Huynh_S\\Genshin Optimiser\\Equipment Names\\weapons\\polearms.txt", 40);
         Database bowNames = new Database("\\\\bex-file-01\\studenthome$\\16\\16Huynh_S\\Genshin Optimiser\\Equipment Names\\weapons\\bows.txt", 40);
         Database catalystNames = new Database("\\\\bex-file-01\\studenthome$\\16\\16Huynh_S\\Genshin Optimiser\\Equipment Names\\weapons\\catalysts.txt", 40);
-
-        //Storing an arbitrary artifact:
-        Artifact testArtifact = new Artifact("Husk of Opulent Dreams", 3, "DEF%", new String[]{"ATK%", "CD", "CR", ""}, new double[]{4.7, 6.2, 3.5, 0}, 1);
-        artifactAttributes.appendRecord(testArtifact.toString(true));
-        artifactValues.appendRecord(testArtifact.toString(false));
-
- */
-
+*/
     }
 }

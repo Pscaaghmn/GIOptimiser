@@ -27,9 +27,6 @@ public class InventoryGUI extends JPanel implements ActionListener {
         }
 
         items = new ArrayList<>();
-        for (int i = 0; i < contents[0].getRecordCount(); i++) {
-            items.add(new JButton();//TODO: substring the getrecord
-        }
 
         itemDetails = new JLabel[6];
         order = new JButton("^");
@@ -56,7 +53,15 @@ public class InventoryGUI extends JPanel implements ActionListener {
             itemDetails[i].setBounds(900,100 + (i*50),200,50);
             this.add(itemDetails[i]);
         }
+
         itemsBox.setBounds(0,70,1200,470);
+        itemsBox.setLayout(new GridLayout(3,7));
+        for (int i = 1; i < contents[0].getRecordCount(); i++) {
+            System.out.println(i+": " + contents[0].getRecord(i) + ": " + contents[0].getRecord(i).length());
+            items.add(new JButton(contents[0].getRecord(i).substring(0,30)));
+            itemsBox.add(items.get(i));
+            items.get(i).addActionListener(this);
+        }
 
         order.addActionListener(this);
         homeButton.addActionListener(this);
@@ -79,12 +84,6 @@ public class InventoryGUI extends JPanel implements ActionListener {
         this.add(compareItemsButton);
         this.add(sortOptions);
         this.add(itemsBox);
-
-        itemsBox.setLayout(new GridLayout(3,7));
-        for (JButton item:
-                items) {
-
-        }
     }
 
     private void sort(String sortOption){

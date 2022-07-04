@@ -10,8 +10,8 @@ public class FileHandler {
 
             if (length == 0) {
                 //Whole line
-                return rf.readLine();
-
+                String read = rf.readLine();
+                return read;
             } else {
                 //Specific length, using a string builder to omit carriage returns
                 StringBuilder output = new StringBuilder();

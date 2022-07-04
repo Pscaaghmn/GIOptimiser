@@ -25,7 +25,7 @@ public class MainFrame extends JFrame{
 
         for (int i = 0; i < allPanels.length; i++) {
             this.add(allPanels[i]);
-            allPanels[i].setBounds(new Rectangle(0,0,1500,maxHeight));
+            allPanels[i].setBounds(0,0,1500,maxHeight);
 
             allPanels[i].setVisible(i == 0);
         }

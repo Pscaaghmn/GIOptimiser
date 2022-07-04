@@ -38,7 +38,8 @@ public class Database {
         //Gets a record from the database, passing through deleted records
         int deletedCount = 0;
         int i = 0;
-        while (i < deletedRows.size()){
+
+        while (i < deletedRows.get(deletedRows.size() - 1)){
            //If the following if-statement had been integrated into the while loop, it could cause a runtime error if there were no deleted records (hence deletedRows.get(0) would crash)
            if (deletedRows.get(i) <= rowNumber) {
                //Increasing the line number to look at for each deleted record
@@ -46,8 +47,10 @@ public class Database {
            } else {
                return FileHandler.fileRead(filename, (rowNumber + deletedCount) * (lineLength +1), 0);
            }
-            i++;
+           i++;
         }
+
+        System.out.println("a");
         return FileHandler.fileRead(filename, (rowNumber + deletedCount) * (lineLength +1), 0);
     }
 
