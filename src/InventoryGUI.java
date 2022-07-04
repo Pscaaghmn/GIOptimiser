@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -16,10 +17,9 @@ public class InventoryGUI extends JPanel implements ActionListener {
 
     public InventoryGUI(Boolean isArtifact, String filePath){
         this.setLayout(null);
-        this.filePath = filePath;
-
         this.isArtifact = isArtifact;
 
+        this.filePath = filePath;
         if (isArtifact) {
             contents = new Database[]{new Database(filePath+"artifact_att.txt",44), new Database(filePath+"artifact_val.txt", 20)};
         }else{
@@ -27,6 +27,10 @@ public class InventoryGUI extends JPanel implements ActionListener {
         }
 
         items = new ArrayList<>();
+        for (int i = 0; i < contents[0].getRecordCount(); i++) {
+            items.add(new JButton();//TODO: substring the getrecord
+        }
+
         itemDetails = new JLabel[6];
         order = new JButton("^");
 
@@ -37,20 +41,22 @@ public class InventoryGUI extends JPanel implements ActionListener {
         JButton editItemButton = new JButton("Edit");
         JButton compareItemsButton = new JButton("Compare");
         JComboBox<String> sortOptions = new JComboBox<>(new String[]{"Name", "Level"});
+        JPanel itemsBox = new JPanel();
 
-        order.setBounds(200,700,30,50);
+        order.setBounds(200,500,50,50);
         homeButton.setBounds(0,0,70,50);
         artifactInventoryButton.setBounds(100,0,100,50);
         weaponInventoryButton.setBounds(200,0,100,50);
         addNewItemButton.setBounds(400,0,150,50);
-        editItemButton.setBounds(1000,700,100,50);
-        compareItemsButton.setBounds(1100,700,100,50);
-        sortOptions.setBounds(0,700,200,50);
+        editItemButton.setBounds(1000,500,100,50);
+        compareItemsButton.setBounds(1100,500,100,50);
+        sortOptions.setBounds(0,500,200,50);
         for (int i = 0; i < 6; i++) {
             itemDetails[i] = new JLabel();
             itemDetails[i].setBounds(900,100 + (i*50),200,50);
             this.add(itemDetails[i]);
         }
+        itemsBox.setBounds(0,70,1200,470);
 
         order.addActionListener(this);
         homeButton.addActionListener(this);
@@ -72,6 +78,13 @@ public class InventoryGUI extends JPanel implements ActionListener {
         this.add(editItemButton);
         this.add(compareItemsButton);
         this.add(sortOptions);
+        this.add(itemsBox);
+
+        itemsBox.setLayout(new GridLayout(3,7));
+        for (JButton item:
+                items) {
+
+        }
     }
 
     private void sort(String sortOption){
