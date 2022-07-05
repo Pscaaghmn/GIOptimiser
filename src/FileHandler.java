@@ -1,4 +1,5 @@
-import java.io.*;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 
 public class FileHandler {
 
@@ -10,8 +11,7 @@ public class FileHandler {
 
             if (length == 0) {
                 //Whole line
-                String read = rf.readLine();
-                return read;
+                return rf.readLine();
             } else {
                 //Specific length, using a string builder to omit carriage returns
                 StringBuilder output = new StringBuilder();
@@ -26,7 +26,6 @@ public class FileHandler {
                     }
                 }
 
-                System.out.print(output);
                 return output.toString();
             }
         } catch (IOException e) {

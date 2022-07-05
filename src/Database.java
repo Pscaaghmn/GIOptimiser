@@ -6,12 +6,13 @@ public class Database {
     private final int lineLength;
     private int recordCount;
 
-    private ArrayList<Integer> deletedRows;
+    private final ArrayList<Integer> deletedRows;
 
     public Database(String filename, int lineLength) {
         this.filename = filename;
         this.lineLength = lineLength;
         deletedRows = new ArrayList<>();
+        recordCount = -1;
         recordCount = getRecordCount();
     }
 
@@ -28,34 +29,56 @@ public class Database {
 
     public void deleteRecord(int rowNumber) {
         //Deletes the record from the database using a delete-flag
-        deletedRows.add(rowNumber);
-        FileHandler.fileWrite(filename, ((rowNumber + 1) * (lineLength + 2)) - 9, "<DEL!#>");
+        if (getRecordCount()==0){
+            System.out.println("Nothing to delete");
+        }
+
+        int row = rowWithOffset(rowNumber);
+
+        int i = 0;
+
+        while (i < deletedRows.size()){
+            if (row < deletedRows.get(i)) {
+                break;
+            }
+            i++;
+        }
+
+        deletedRows.add(i, row);
+        FileHandler.fileWrite(filename, ((row+1) * (lineLength + 2)) - 9, "<DEL!#>" + "\r\n");
 
         recordCount--;
     }
 
     public String getRecord(int rowNumber) {
         //Gets a record from the database, passing through deleted records
-        int deletedCount = 0;
-        int i = 0;
+        return FileHandler.fileRead(filename, rowWithOffset(rowNumber) * (lineLength + 2), 0);
+    }
 
-        while (i < deletedRows.get(deletedRows.size() - 1)){
-           //If the following if-statement had been integrated into the while loop, it could cause a runtime error if there were no deleted records (hence deletedRows.get(0) would crash)
-           if (deletedRows.get(i) <= rowNumber) {
-               //Increasing the line number to look at for each deleted record
-               deletedCount++;
-           } else {
-               return FileHandler.fileRead(filename, (rowNumber + deletedCount) * (lineLength +1), 0);
-           }
-           i++;
-        }
-
-        System.out.println("a");
-        return FileHandler.fileRead(filename, (rowNumber + deletedCount) * (lineLength +1), 0);
+    public String getRecord(int rowNumber, boolean overrideOffset) {
+        //Gets a record from the database, passing through deleted records
+        return FileHandler.fileRead(filename, (overrideOffset ? rowNumber : rowWithOffset(rowNumber)) * (lineLength + 2), 0);
     }
 
     public int getRecordCount() {
-        return FileHandler.getFileLength(filename)/(lineLength+1) - deletedRows.size();
+        if(recordCount == -1) {
+
+            int rawLines = FileHandler.getFileLength(filename) / (lineLength + 1);
+            int records = 0;
+            for (int i = 0; i < rawLines; i++) {
+
+                if (getRecord(i, true).startsWith("<DEL!#>", lineLength - 7)) {
+                    deletedRows.add(i);
+                } else {
+                    records++;
+                }
+            }
+
+            return records;
+
+        }else{
+            return (FileHandler.getFileLength(filename) / (lineLength + 1)) - deletedRows.size();
+        }
     }
 
     public boolean recordExists(String data) {
@@ -94,4 +117,18 @@ public class Database {
         }
     }
 
+    private int rowWithOffset(int rowNumber){
+        //Offsetting original row number because of deleted record debris
+        int row = rowNumber;
+
+        int i = -1;
+        while (i < row) {
+            i++;
+            if (deletedRows.contains(i)){
+                row++;
+            }
+        }
+
+        return row;
+    }
 }

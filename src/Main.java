@@ -4,12 +4,10 @@ import java.awt.*;
 public class Main {
 
     public static void main(String[] args) {
-        //String filePath = (false?"D:\\Java Projects\\GIOptimiser\\":"C:\\Users\\16huynh_s\\IdeaProjects\\GIOptimiser\\src\\");
 
-        //MainFrame mf = new MainFrame(filePath);
+        //MainFrame mf = new MainFrame();
 
-        Database test = new Database("C:\\Users\\16huynh_s\\IdeaProjects\\GIOptimiser\\src\\artifact_att.txt",44);
-        System.out.println(test.getRecordCount());
+        Database test = new Database("artifact_att.txt",44);
         System.out.println(test.getRecord(0));
 /* ------------------------------------------------------------------------------------------------------------------------------------------
         //  "\\\\bex-file-01\\studenthome$\\16\\16Huynh_S\\Genshin Optimiser\\Artifact Inventory\\artifact_att.txt"

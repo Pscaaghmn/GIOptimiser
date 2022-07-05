@@ -7,7 +7,6 @@ import java.util.ArrayList;
 public class InventoryGUI extends JPanel implements ActionListener {
 
     private final boolean isArtifact;
-    private final String filePath;
 
     private Database[] contents;
 
@@ -15,15 +14,14 @@ public class InventoryGUI extends JPanel implements ActionListener {
     private JLabel[] itemDetails;  //name, level, rarity, description, primary attribute, primary value
     private final JButton order;
 
-    public InventoryGUI(Boolean isArtifact, String filePath){
+    public InventoryGUI(Boolean isArtifact){
         this.setLayout(null);
         this.isArtifact = isArtifact;
 
-        this.filePath = filePath;
         if (isArtifact) {
-            contents = new Database[]{new Database(filePath+"artifact_att.txt",44), new Database(filePath+"artifact_val.txt", 20)};
+            contents = new Database[]{new Database("artifact_att.txt",44), new Database("artifact_val.txt", 20)};
         }else{
-            contents = new Database[]{new Database(filePath+"weaponstats.txt",44)};
+            contents = new Database[]{new Database("weaponstats.txt",44)};
         }
 
         items = new ArrayList<>();

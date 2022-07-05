@@ -4,7 +4,7 @@ import java.awt.*;
 public class MainFrame extends JFrame{
     private static JPanel[] allPanels;
 
-    public MainFrame(String filePath){
+    public MainFrame(){
         int maxHeight = 700;
 
         setBounds(0,0, 1500, maxHeight);
@@ -13,8 +13,8 @@ public class MainFrame extends JFrame{
         allPanels = new JPanel[7];
         allPanels[0] = new MainMenuGUI();
 
-        allPanels[1] = new InventoryGUI(true, filePath);
-        allPanels[2] = new InventoryGUI(false, filePath);
+        allPanels[1] = new InventoryGUI(true);
+        allPanels[2] = new InventoryGUI(false);
         allPanels[3] = new AddEquipmentGUI(true);
         allPanels[4] = new AddEquipmentGUI(false);
 
