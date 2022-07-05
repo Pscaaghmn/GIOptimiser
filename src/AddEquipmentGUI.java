@@ -2,16 +2,21 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class AddEquipmentGUI extends JPanel implements ActionListener{
 
-    private String[] nameList;
+    private JComboBox<String> nameComboBox;
+    private JComboBox<String> typeComboBox;
+
+    private final boolean isArtifact;
 
     public AddEquipmentGUI(boolean isArtifact) {
+        this.isArtifact = isArtifact;
         this.setLayout(null);
 
         Database names = new Database((isArtifact ? "artifacts.txt" : "swords.txt"), (isArtifact ? 30 : 40));
-        nameList = new String[names.getRecordCount()];
+        String[] nameList = new String[names.getRecordCount()];
         for (int i = 0; i < nameList.length; i++) {
             nameList[i] = names.getRecord(i).trim();
         }
@@ -21,10 +26,9 @@ public class AddEquipmentGUI extends JPanel implements ActionListener{
         JButton addButton = new JButton("Add");
         JLabel nameLabel = new JLabel("Name:");
         JLabel typeLabel = new JLabel(isArtifact?"Piece:":"Type:");
-        JComboBox<String> nameComboBox = new JComboBox<>(nameList);
-        JComboBox<String> typeComboBox =
-                new JComboBox<>((isArtifact? "Flower,Plume,Sands,Goblet,Circlet"
-                        :"All,Sword,Claymore,Polearm,Bow,Catalyst").split(","));
+        nameComboBox = new JComboBox<>(nameList);
+        typeComboBox = new JComboBox<>((isArtifact? "Flower,Plume,Sands,Goblet,Circlet"
+                        :"Sword,Claymore,Polearm,Bow,Catalyst").split(","));
 
         homeButton.setBounds(1030,500,70,50);
         inventoryButton.setBounds(1100,500,70,50);
@@ -51,6 +55,38 @@ public class AddEquipmentGUI extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        switch (e.getActionCommand()) {
+            case "Home" -> MainFrame.navigate((isArtifact ? 3 : 4),0);
+            case "Inventory" -> MainFrame.navigate((isArtifact ? 3 : 4),(isArtifact ? 1 : 2));
+            case "Add" -> {
+                if (isArtifact) {
 
+                    Database attributes = new Database("artifact_att.txt", 39);
+                    Database values = new Database("artifact_val.txt", 20);
+                    Artifact newArtifact = new Artifact((String) nameComboBox.getSelectedItem(), typeComboBox.getSelectedIndex());
+
+                    attributes.appendRecord(newArtifact.toString(true));
+                    values.appendRecord(newArtifact.toString(false));
+
+                }else{
+
+                    Database weaponStats = new Database("weapon_stats.txt", 53);
+                    Weapon newWeapon = new Weapon((String) nameComboBox.getSelectedItem(), typeComboBox.getSelectedIndex());
+
+                    weaponStats.appendRecord(newWeapon.toString());
+                }
+
+            }
+            case "comboBoxChanged" -> {
+                if (((JComboBox<?>) e.getSource()).getItemCount() == 5 && !isArtifact){
+                    Database names = new Database(((String)typeComboBox.getSelectedItem()).toLowerCase() + "s.txt", 40);
+                    nameComboBox.removeAllItems();
+                    for (int i = 0; i < names.getRecordCount(); i++) {
+                        nameComboBox.addItem(names.getRecord(i).trim());
+                    }
+                }
+
+            }
+        }
     }
 }

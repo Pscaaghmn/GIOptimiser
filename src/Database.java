@@ -16,6 +16,7 @@ public class Database {
         recordCount = getRecordCount();
     }
 
+
     public void appendRecord(String data) {
         //Adds a record to the end of the database
         if (data.length() > lineLength) {
@@ -35,16 +36,7 @@ public class Database {
 
         int row = rowWithOffset(rowNumber);
 
-        int i = 0;
-
-        while (i < deletedRows.size()){
-            if (row < deletedRows.get(i)) {
-                break;
-            }
-            i++;
-        }
-
-        deletedRows.add(i, row);
+        deletedRows.add(row);
         FileHandler.fileWrite(filename, ((row+1) * (lineLength + 2)) - 9, "<DEL!#>" + "\r\n");
 
         recordCount--;

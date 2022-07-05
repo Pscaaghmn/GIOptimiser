@@ -29,25 +29,24 @@ public class Artifact extends Equipment{
         this.secondaryValues = secondaryValues;
     }
 
-    public Artifact(String set, int piece, int primaryAttributeInt, int[] secondaryAttributesInt, double[] secondaryValues, int level) {
-        //Constructor using specific parameters, with int attributes already
+    public Artifact(String set, int piece) {
+        //Constructor using specific parameters, template artifact.
 
         //Setting the foundations (i.e. what the attributes actually are)
         this.set = set;
         this.piece = piece;
-        setPrimaryAttribute(primaryAttributeInt);
-        secondaryAttributes = secondaryAttributesInt;
 
-        setLevel(level);
-
-        //Assigning the values to the attributes
-        setPrimaryValue(primaryBase[getPrimaryAttribute()] + (primaryIncrement[getPrimaryAttribute()] * (level - 1)));
-        this.secondaryValues = secondaryValues;
+        //Preset
+        setPrimaryAttribute(Equipment.strAttToInt("ATK%"));
+        secondaryAttributes = Equipment.strAttToInt(new String[]{"ATK", "DEF", "HP", "ER"});
+        setLevel(0);
+        setPrimaryValue(0);
+        this.secondaryValues = new double[]{0,0,0,0};
     }
 
     public Artifact(String attRecord, String valRecord) {
         //Constructor using record string
-        int[] attFieldWidths = new int[]{30, 2, 2, 2, 2, 2, 2, 2};
+        int[] attFieldWidths = new int[]{30, 1, 2, 1, 1, 1, 1, 2};
         int[] valFieldWidths = new int[]{4, 4, 4, 4, 4};
 
         String[] attFields = Database.recordToArray(attRecord, attFieldWidths);
@@ -69,7 +68,7 @@ public class Artifact extends Equipment{
     }
 
     public String toString(Boolean isAttribute){
-        int[] attFieldWidths = new int[]{30, 2, 2, 2, 2, 2, 2, 2};
+        int[] attFieldWidths = new int[]{30, 1, 2, 1, 1, 1, 1, 2};
         String[] connectedAttData = new String[]
                 {set,
                 String.valueOf(piece),

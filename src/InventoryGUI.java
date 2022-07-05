@@ -11,7 +11,7 @@ public class InventoryGUI extends JPanel implements ActionListener {
     private Database[] contents;
 
     private ArrayList<JButton> items;
-    private JLabel[] itemDetails;  //name, level, rarity, description, primary attribute, primary value
+    private JLabel[] itemDetails;  //name, level, rarity, primary attribute, primary value
     private final JButton order;
 
     public InventoryGUI(Boolean isArtifact){
@@ -19,14 +19,14 @@ public class InventoryGUI extends JPanel implements ActionListener {
         this.isArtifact = isArtifact;
 
         if (isArtifact) {
-            contents = new Database[]{new Database("artifact_att.txt",44), new Database("artifact_val.txt", 20)};
+            contents = new Database[]{new Database("artifact_att.txt",39), new Database("artifact_val.txt", 20)};
         }else{
-            contents = new Database[]{new Database("weaponstats.txt",44)};
+            contents = new Database[]{new Database("weapon_stats.txt",53)};
         }
 
         items = new ArrayList<>();
 
-        itemDetails = new JLabel[6];
+        itemDetails = new JLabel[5];
         order = new JButton("^");
 
         JButton homeButton = new JButton("Home");
@@ -46,14 +46,14 @@ public class InventoryGUI extends JPanel implements ActionListener {
         editItemButton.setBounds(1000,500,100,50);
         compareItemsButton.setBounds(1100,500,100,50);
         sortOptions.setBounds(0,500,200,50);
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 5; i++) {
             itemDetails[i] = new JLabel();
             itemDetails[i].setBounds(900,100 + (i*50),200,50);
             this.add(itemDetails[i]);
         }
 
-        itemsBox.setBounds(0,70,1200,470);
-        itemsBox.setLayout(new GridLayout(3,7));
+        itemsBox.setBounds(0,70,1200,420);
+        itemsBox.setLayout(new GridLayout(0,3));
         for (int i = 0; i < contents[0].getRecordCount(); i++) {
             items.add(new JButton(contents[0].getRecord(i).substring(0,30)));
             itemsBox.add(items.get(i));
@@ -99,6 +99,9 @@ public class InventoryGUI extends JPanel implements ActionListener {
             case "^" -> order.setText("v");
             case "v" -> order.setText("^");
             case "comboBoxChanged" -> sort((String) ((JComboBox<?>) e.getSource()).getSelectedItem());
+            default -> {
+
+            }
         }
     }
 
