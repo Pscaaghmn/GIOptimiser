@@ -54,8 +54,7 @@ public class InventoryGUI extends JPanel implements ActionListener {
 
         itemsBox.setBounds(0,70,1200,470);
         itemsBox.setLayout(new GridLayout(3,7));
-        for (int i = 1; i < contents[0].getRecordCount(); i++) {
-            System.out.println(i+": " + contents[0].getRecord(i) + ": " + contents[0].getRecord(i).length());
+        for (int i = 0; i < contents[0].getRecordCount(); i++) {
             items.add(new JButton(contents[0].getRecord(i).substring(0,30)));
             itemsBox.add(items.get(i));
             items.get(i).addActionListener(this);
@@ -91,38 +90,15 @@ public class InventoryGUI extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand()){
-            case "Home":
-                MainFrame.navigate((isArtifact? 1:2),0);
-                break;
-
-            case "Artifacts":
-                MainFrame.navigate(2,1);
-                break;
-
-            case "Weapons":
-                MainFrame.navigate(1,2);
-                break;
-
-            case "Add New Artifact":
-                MainFrame.navigate(1,3);
-                break;
-
-            case "Add New Weapon":
-                MainFrame.navigate(2,4);
-                break;
-
-            case "^":
-                order.setText("v");
-                break;
-
-            case "v":
-                order.setText("^");
-                break;
-
-            case "comboBoxChanged":
-                sort((String)((JComboBox<?>)e.getSource()).getSelectedItem());
-                break;
+        switch (e.getActionCommand()) {
+            case "Home" -> MainFrame.navigate((isArtifact ? 1 : 2), 0);
+            case "Artifacts" -> MainFrame.navigate(2, 1);
+            case "Weapons" -> MainFrame.navigate(1, 2);
+            case "Add New Artifact" -> MainFrame.navigate(1, 3);
+            case "Add New Weapon" -> MainFrame.navigate(2, 4);
+            case "^" -> order.setText("v");
+            case "v" -> order.setText("^");
+            case "comboBoxChanged" -> sort((String) ((JComboBox<?>) e.getSource()).getSelectedItem());
         }
     }
 
