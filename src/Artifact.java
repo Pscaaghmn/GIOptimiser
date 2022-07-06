@@ -37,7 +37,7 @@ public class Artifact extends Equipment{
         this.piece = piece;
 
         //Preset
-        setPrimaryAttribute(Equipment.strAttToInt("ATK%"));
+        setPrimaryAttribute(Equipment.strAttToInt((piece == 0 ? "ATK" : (piece == 1 ? "HP" : "ATK%"))));
         secondaryAttributes = Equipment.strAttToInt(new String[]{"ATK", "DEF", "HP", "ER"});
         setLevel(0);
         setPrimaryValue(0);

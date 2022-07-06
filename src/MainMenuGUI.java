@@ -31,7 +31,7 @@ public class MainMenuGUI extends JPanel implements ActionListener {
 
         switch (e.getActionCommand()) {
             case "View Inventory" -> MainFrame.navigate(0, 1);
-            case "Calculate predicted Artifact with time or resin" -> MainFrame.navigate(0, 3);
+            case "Calculate predicted Artifact with time or resin" -> MainFrame.navigate(0, 3); //TODO: Change
             case "Calculate predicted time or resin" -> MainFrame.navigate(0, 4);
         }
     }

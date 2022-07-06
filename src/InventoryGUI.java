@@ -11,7 +11,7 @@ public class InventoryGUI extends JPanel implements ActionListener {
     private Database[] contents;
 
     private ArrayList<JButton> items;
-    private JLabel[] itemDetails;  //name, type, level, primary attribute, primary value
+    private JLabel[] itemDetails;
     private final JButton order;
     private JPanel itemsBox;
 
@@ -27,7 +27,7 @@ public class InventoryGUI extends JPanel implements ActionListener {
 
         items = new ArrayList<>();
 
-        itemDetails = new JLabel[7]; //TODO: Edit based on isArtifact
+        itemDetails = new JLabel[(isArtifact ? 8 : 5)];
         order = new JButton("^");
 
         JButton homeButton = new JButton("Home");
@@ -47,15 +47,15 @@ public class InventoryGUI extends JPanel implements ActionListener {
         editItemButton.setBounds(1000,500,100,50);
         compareItemsButton.setBounds(1100,500,100,50);
         sortOptions.setBounds(0,500,200,50);
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < itemDetails.length; i++) {
             itemDetails[i] = new JLabel();
-            itemDetails[i].setBounds(900,100 + (i*50),200,50);
+            itemDetails[i].setBounds(900,100 + (i*20),200,20);
             this.add(itemDetails[i]);
         }
 
-        itemsBox.setBounds(0,70,1200,420);
-        itemsBox.setLayout(new GridLayout(0,3));
-        loadItems();
+        itemsBox.setBounds(0,70,800,420);
+        itemsBox.setLayout(new GridLayout(0,5));
+
 
         order.addActionListener(this);
         homeButton.addActionListener(this);
@@ -81,6 +81,7 @@ public class InventoryGUI extends JPanel implements ActionListener {
     }
 
     public void loadItems(){
+        itemsBox.removeAll();
         items.clear();
         for (int i = 0; i < contents[0].getRecordCount(); i++) {
             items.add(new JButton((i < 10 ? "0" : "") + (i+1) + ": " + contents[0].getRecord(i).substring(0,30).trim()));
@@ -94,6 +95,26 @@ public class InventoryGUI extends JPanel implements ActionListener {
         //TODO: ADD FIELDS
     }
 
+    private void populateDescriptionLabels(int buttonIndex){
+        String[] fields = Database.recordToArray(contents[0].getRecord(buttonIndex),(isArtifact ? new int[]{30, 1, 2, 1, 1, 1, 1, 2} : new int[]{40, 1, 1, 3, 2, 2, 4}));
+        itemDetails[0].setText("(" + (buttonIndex < 10 ? "0" : "") + (buttonIndex+1) + ") " + fields[0]);
+
+        if (isArtifact){
+            String[] values = Database.recordToArray(contents[1].getRecord(buttonIndex), new int[]{4, 4, 4, 4, 4});
+            itemDetails[1].setText("Piece: " + new String[]{"Flower","Plume","Sands","Goblet","Circlet"}[Integer.parseInt(fields[1])]);
+            itemDetails[2].setText("Level: " + fields[7]);
+            itemDetails[3].setText(Equipment.intAttToStr(Integer.parseInt(fields[2].trim())) + ": " + values[0]);
+            for (int i = 0; i < 4; i++) {
+                itemDetails[i+4].setText(Equipment.intAttToStr(Integer.parseInt(fields[i+3].trim())) + ": " + values[i+1]);
+            }
+        }else{
+            itemDetails[1].setText("Refinement Rank: " + fields[2]);
+            itemDetails[2].setText("Level: " + fields[5]);
+            itemDetails[3].setText("Base ATK: " + fields[3]);
+            itemDetails[4].setText(Equipment.intAttToStr(Integer.parseInt(fields[4].trim())) + ": " + fields[6]);
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
@@ -105,19 +126,8 @@ public class InventoryGUI extends JPanel implements ActionListener {
             case "^" -> order.setText("v");
             case "v" -> order.setText("^");
             case "comboBoxChanged" -> sort((String) ((JComboBox<?>) e.getSource()).getSelectedItem());
-            default -> {
-                String[] fields =
-                        Database.recordToArray(
-                                contents[0].getRecord(Integer.parseInt(e.getActionCommand().substring(0, 2))-1),
-                                (isArtifact ? new int[]{30, 1, 2, 1, 1, 1, 1, 2} : new int[]{40, 1, 1, 3, 2, 2, 4}));
-                itemDetails[0].setText(fields[0]);
-                //TODO: Finish
-                if (isArtifact){
-                    
-                }else{
-                    
-                }
-            }
+            case "Edit" -> MainFrame.navigate((isArtifact ? 1 : 2), -1 * Integer.parseInt(itemDetails[0].getText().substring(1, 3)));
+            default -> populateDescriptionLabels(Integer.parseInt(e.getActionCommand().substring(0, 2)) - 1);
         }
     }
 

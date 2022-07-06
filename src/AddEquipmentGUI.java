@@ -1,15 +1,13 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class AddEquipmentGUI extends JPanel implements ActionListener{
 
-    private JComboBox<String> nameComboBox;
-    private JComboBox<String> typeComboBox;
+    protected JComboBox<String> nameComboBox;
+    protected JComboBox<String> typeComboBox;
 
-    private final boolean isArtifact;
+    protected final boolean isArtifact;
 
     public AddEquipmentGUI(boolean isArtifact) {
         this.isArtifact = isArtifact;
@@ -34,9 +32,9 @@ public class AddEquipmentGUI extends JPanel implements ActionListener{
         inventoryButton.setBounds(1100,500,70,50);
         addButton.setBounds(900,500,70,50);
         nameLabel.setBounds(0,0,70,50);
-        typeLabel.setBounds(0,100,70,50);
+        typeLabel.setBounds(0,50,70,50);
         nameComboBox.setBounds(70,0,200,50);
-        typeComboBox.setBounds(70,100,200,50);
+        typeComboBox.setBounds(70,50,200,50);
 
         homeButton.addActionListener(this);
         inventoryButton.addActionListener(this);
