@@ -11,7 +11,7 @@ public class InventoryGUI extends JPanel implements ActionListener {
     private Database[] contents;
 
     private ArrayList<JButton> items;
-    private JLabel[] itemDetails;  //name, level, rarity, primary attribute, primary value
+    private JLabel[] itemDetails;  //name, type, level, primary attribute, primary value
     private final JButton order;
 
     public InventoryGUI(Boolean isArtifact){
@@ -26,7 +26,7 @@ public class InventoryGUI extends JPanel implements ActionListener {
 
         items = new ArrayList<>();
 
-        itemDetails = new JLabel[5];
+        itemDetails = new JLabel[7]; //TODO: Edit based on isArtifact
         order = new JButton("^");
 
         JButton homeButton = new JButton("Home");
@@ -55,7 +55,7 @@ public class InventoryGUI extends JPanel implements ActionListener {
         itemsBox.setBounds(0,70,1200,420);
         itemsBox.setLayout(new GridLayout(0,3));
         for (int i = 0; i < contents[0].getRecordCount(); i++) {
-            items.add(new JButton(contents[0].getRecord(i).substring(0,30)));
+            items.add(new JButton((i < 10 ? "0" : "") + (i+1) + ":" + contents[0].getRecord(i).substring(0,30).trim()));
             itemsBox.add(items.get(i));
             items.get(i).addActionListener(this);
         }
@@ -100,7 +100,14 @@ public class InventoryGUI extends JPanel implements ActionListener {
             case "v" -> order.setText("^");
             case "comboBoxChanged" -> sort((String) ((JComboBox<?>) e.getSource()).getSelectedItem());
             default -> {
-
+                String[] fields = Database.recordToArray(contents[0].getRecord((int)e.getActionCommand().substring(0, 2)),(isArtifact ? new int[]{30, 1, 2, 1, 1, 1, 1, 2} : new int[]{40, 1, 1, 3, 2, 2, 4}));
+                itemDetails[0] = fields[0];            
+                //TODO: Finish
+                if (isArtifact?){
+                    
+                }else{
+                    
+                }
             }
         }
     }
