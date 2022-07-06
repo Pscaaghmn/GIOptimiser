@@ -13,6 +13,7 @@ public class InventoryGUI extends JPanel implements ActionListener {
     private ArrayList<JButton> items;
     private JLabel[] itemDetails;  //name, type, level, primary attribute, primary value
     private final JButton order;
+    private JPanel itemsBox;
 
     public InventoryGUI(Boolean isArtifact){
         this.setLayout(null);
@@ -36,7 +37,7 @@ public class InventoryGUI extends JPanel implements ActionListener {
         JButton editItemButton = new JButton("Edit");
         JButton compareItemsButton = new JButton("Compare");
         JComboBox<String> sortOptions = new JComboBox<>(new String[]{"Name", "Level"});
-        JPanel itemsBox = new JPanel();
+        itemsBox = new JPanel();
 
         order.setBounds(200,500,50,50);
         homeButton.setBounds(0,0,70,50);
@@ -54,11 +55,7 @@ public class InventoryGUI extends JPanel implements ActionListener {
 
         itemsBox.setBounds(0,70,1200,420);
         itemsBox.setLayout(new GridLayout(0,3));
-        for (int i = 0; i < contents[0].getRecordCount(); i++) {
-            items.add(new JButton((i < 10 ? "0" : "") + (i+1) + ":" + contents[0].getRecord(i).substring(0,30).trim()));
-            itemsBox.add(items.get(i));
-            items.get(i).addActionListener(this);
-        }
+        loadItems();
 
         order.addActionListener(this);
         homeButton.addActionListener(this);
@@ -83,6 +80,15 @@ public class InventoryGUI extends JPanel implements ActionListener {
         this.add(itemsBox);
     }
 
+    public void loadItems(){
+        items.clear();
+        for (int i = 0; i < contents[0].getRecordCount(); i++) {
+            items.add(new JButton((i < 10 ? "0" : "") + (i+1) + ": " + contents[0].getRecord(i).substring(0,30).trim()));
+            itemsBox.add(items.get(i));
+            items.get(i).addActionListener(this);
+        }
+    }
+
     private void sort(String sortOption){
         //Selection sort
         //TODO: ADD FIELDS
@@ -100,10 +106,13 @@ public class InventoryGUI extends JPanel implements ActionListener {
             case "v" -> order.setText("^");
             case "comboBoxChanged" -> sort((String) ((JComboBox<?>) e.getSource()).getSelectedItem());
             default -> {
-                String[] fields = Database.recordToArray(contents[0].getRecord((int)e.getActionCommand().substring(0, 2)),(isArtifact ? new int[]{30, 1, 2, 1, 1, 1, 1, 2} : new int[]{40, 1, 1, 3, 2, 2, 4}));
-                itemDetails[0] = fields[0];            
+                String[] fields =
+                        Database.recordToArray(
+                                contents[0].getRecord(Integer.parseInt(e.getActionCommand().substring(0, 2))-1),
+                                (isArtifact ? new int[]{30, 1, 2, 1, 1, 1, 1, 2} : new int[]{40, 1, 1, 3, 2, 2, 4}));
+                itemDetails[0].setText(fields[0]);
                 //TODO: Finish
-                if (isArtifact?){
+                if (isArtifact){
                     
                 }else{
                     
