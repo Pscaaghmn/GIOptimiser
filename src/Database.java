@@ -58,7 +58,6 @@ public class Database {
             int rawLines = FileHandler.getFileLength(filename) / (lineLength + 1);
             int records = 0;
             for (int i = 0; i < rawLines; i++) {
-
                 if (getRecord(i, true).startsWith("<DEL!#>", lineLength - 7)) {
                     deletedRows.add(i);
                 } else {
