@@ -25,7 +25,7 @@ public class Artifact extends Equipment{
         setLevel(level);
 
         //Assigning the values to the attributes
-        setPrimaryValue(primaryBase[getPrimaryAttribute()] + (primaryIncrement[getPrimaryAttribute()] * (level - 1)));
+        setPrimaryValue(primaryBase[getPrimaryAttribute()] + (primaryIncrement[getPrimaryAttribute()] * (level)));
         this.secondaryValues = secondaryValues;
     }
 
@@ -37,8 +37,8 @@ public class Artifact extends Equipment{
         this.piece = piece;
 
         //Preset
-        setPrimaryAttribute(Equipment.strAttToInt((piece == 0 ? "ATK" : (piece == 1 ? "HP" : "ATK%"))));
-        secondaryAttributes = Equipment.strAttToInt(new String[]{"ATK", "DEF", "HP", "ER"});
+        setPrimaryAttribute(0);
+        secondaryAttributes = new int[]{0,1,2,3};
         setLevel(0);
         setPrimaryValue(0);
         this.secondaryValues = new double[]{0,0,0,0};
@@ -101,6 +101,13 @@ public class Artifact extends Equipment{
                 System.out.println("\u001B[35m" + Equipment.intAttToStr(secondaryAttributes[i]) + ": " + secondaryValues[i] + "\u001B[0m");
             }
         }
+    }
+
+    public static double[] getPrimaryIncrement(){
+        return primaryIncrement;
+    }
+    public static double[] getPrimaryBase(){
+        return primaryBase;
     }
 }
 

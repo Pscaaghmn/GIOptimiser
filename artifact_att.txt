@@ -1,8 +1,10 @@
-Archaic Petra                 01 02490 
-Crimson Witch of Flames       11 02490 
-Ocean-Hued Clam               31 02490 
-Thundersoother                21 02490 
-Bloodstained Chivalry         11 02490 
-Echoes of an Offering         21 02490 
-Emblem of Severed Fate        01 02490 
-Heart of Depth                31 02490 
+Archaic Petra                 00 01230 
+Blizzard Strayer              10 01230 
+Bloodstained Chivalry         20 01230 
+Crimson Witch of Flames       30 01230 
+Echoes of an Offering         40 01230 
+Emblem of Severed Fate        29 661220
+Gladiator's Finale            10 01230 
+Heart of Depth                20 01230 
+Husk of Opulent Dreams        30 01230 
+Lavawalker                    40 01230 
