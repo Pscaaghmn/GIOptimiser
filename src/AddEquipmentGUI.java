@@ -6,6 +6,7 @@ public class AddEquipmentGUI extends JPanel implements ActionListener{
 
     protected JComboBox<String> nameComboBox;
     protected JComboBox<String> typeComboBox;
+    protected JButton addButton;
 
     protected final boolean isArtifact;
 
@@ -21,7 +22,7 @@ public class AddEquipmentGUI extends JPanel implements ActionListener{
 
         JButton homeButton = new JButton("Home");
         JButton inventoryButton = new JButton("Inventory");
-        JButton addButton = new JButton("Add");
+        addButton = new JButton("Add");
         JLabel nameLabel = new JLabel("Name:");
         JLabel typeLabel = new JLabel(isArtifact?"Piece:":"Type:");
         nameComboBox = new JComboBox<>(nameList);

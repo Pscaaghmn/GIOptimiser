@@ -16,8 +16,7 @@ public class Database {
         recordCount = getRecordCount();
     }
 
-
-    public void appendRecord(String data) {
+    public void appendRecord(String data) {//TODO: Check for deleted, then replace instead, removing from deletedRows
         //Adds a record to the end of the database
         if (data.length() > lineLength) {
             System.out.println("Could not append data. String too long. Data length " + data.length() + " is longer than " + lineLength);
@@ -26,6 +25,10 @@ public class Database {
             recordCount++;
         }
 
+    }
+
+    public void replaceRecord(int rowNumber, String record){
+        FileHandler.fileWrite(filename,rowWithOffset(rowNumber) * (lineLength + 2), record);
     }
 
     public void deleteRecord(int rowNumber) {

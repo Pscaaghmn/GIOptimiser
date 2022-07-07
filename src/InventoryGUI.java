@@ -97,7 +97,7 @@ public class InventoryGUI extends JPanel implements ActionListener {
 
     private void populateDescriptionLabels(int buttonIndex){
         String[] fields = Database.recordToArray(contents[0].getRecord(buttonIndex),(isArtifact ? new int[]{30, 1, 2, 1, 1, 1, 1, 2} : new int[]{40, 1, 1, 3, 2, 2, 4}));
-        itemDetails[0].setText("(" + (buttonIndex < 10 ? "0" : "") + (buttonIndex+1) + ") " + fields[0]);
+        itemDetails[0].setText("(" + (buttonIndex < 10 ? "0" : "") + (buttonIndex+1) + ") " + fields[0].trim());
 
         if (isArtifact){
             String[] values = Database.recordToArray(contents[1].getRecord(buttonIndex), new int[]{4, 4, 4, 4, 4});
