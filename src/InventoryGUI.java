@@ -8,22 +8,14 @@ public class InventoryGUI extends JPanel implements ActionListener {
 
     private final boolean isArtifact;
 
-    private Database[] contents;
-
-    private ArrayList<JButton> items;
-    private JLabel[] itemDetails;
+    private final ArrayList<JButton> items;
+    private final JLabel[] itemDetails;
     private final JButton order;
-    private JPanel itemsBox;
+    private final JPanel itemsBox;
 
     public InventoryGUI(Boolean isArtifact){
         this.setLayout(null);
         this.isArtifact = isArtifact;
-
-        if (isArtifact) {
-            contents = new Database[]{new Database("artifact_att.txt",39), new Database("artifact_val.txt", 20)};
-        }else{
-            contents = new Database[]{new Database("weapon_stats.txt",53)};
-        }
 
         items = new ArrayList<>();
 
@@ -37,6 +29,20 @@ public class InventoryGUI extends JPanel implements ActionListener {
         JButton editItemButton = new JButton("Edit");
         JButton compareItemsButton = new JButton("Compare");
         JComboBox<String> sortOptions = new JComboBox<>(new String[]{"Name", "Level"});
+        if (isArtifact) {
+            String[] attributeSortOptions = new String[]{"ATK", "ATK%", "DEF", "DEF%", "HP", "HP%", "Crit Rate", "Crit Damage", "Elemental Mastery", "Energy Recharge", "Healing Bonus", "Physical DMG Bonus", "Pyro DMG Bonus", "Electro DMG Bonus", "Cryo DMG Bonus", "Hydro DMG Bonus", "Anemo DMG Bonus", "Geo DMG Bonus", "Dendro DMG Bonus"};
+            for (String attribute :
+                    attributeSortOptions) {
+                sortOptions.addItem(attribute);
+            }
+        }else{
+            sortOptions.addItem("Base ATK");
+            String[] weaponSortOptions = new String[]{"ATK%", "DEF%", "HP%", "Crit Rate", "Crit Damage", "Elemental Mastery", "Energy Recharge", "Physical DMG Bonus"};
+            for (String attribute :
+                    weaponSortOptions) {
+                sortOptions.addItem(attribute);
+            }
+        }
         itemsBox = new JPanel();
 
         order.setBounds(200,500,50,50);
@@ -81,26 +87,36 @@ public class InventoryGUI extends JPanel implements ActionListener {
     }
 
     public void loadItems(){
+        Database targetDatabase = new Database((isArtifact? "artifact_att.txt" : "weapon_stats.txt"), (isArtifact? 39 : 53));
+
         itemsBox.removeAll();
         items.clear();
-        for (int i = 0; i < contents[0].getRecordCount(); i++) {
-            items.add(new JButton((i < 9 ? "0" : "") + (i+1) + ": " + contents[0].getRecord(i).substring(0,30).trim()));
+        for (int i = 0; i < targetDatabase.getRecordCount(); i++) {
+            items.add(new JButton((i < 9 ? "0" : "") + (i+1) + ": " + targetDatabase.getRecord(i).substring(0,30).trim()));
             itemsBox.add(items.get(i));
             items.get(i).addActionListener(this);
+        }
+
+        for (JLabel l:
+             itemDetails) {
+            l.setText("");
         }
     }
 
     private void sort(String sortOption){
         //Selection sort
-        //TODO: ADD FIELDS
+        //TODO: Sort!
     }
 
     private void populateDescriptionLabels(int buttonIndex){
-        String[] fields = Database.recordToArray(contents[0].getRecord(buttonIndex),(isArtifact ? new int[]{30, 1, 2, 1, 1, 1, 1, 2} : new int[]{40, 1, 1, 3, 2, 2, 4}));
+        Database targetDatabase = new Database((isArtifact? "artifact_att.txt" : "weapon_stats.txt"), (isArtifact? 39 : 53));
+
+        String[] fields = Database.recordToArray(targetDatabase.getRecord(buttonIndex),(isArtifact ? new int[]{30, 1, 2, 1, 1, 1, 1, 2} : new int[]{40, 1, 1, 3, 2, 2, 4}));
         itemDetails[0].setText("(" + (buttonIndex < 9 ? "0" : "") + (buttonIndex+1) + ") " + fields[0].trim());
 
         if (isArtifact){
-            String[] values = Database.recordToArray(contents[1].getRecord(buttonIndex), new int[]{4, 4, 4, 4, 4});
+            Database fieldDatabase = new Database("artifact_val.txt", 20);
+            String[] values = Database.recordToArray(fieldDatabase.getRecord(buttonIndex), new int[]{4, 4, 4, 4, 4});
             itemDetails[1].setText("Piece: " + new String[]{"Flower","Plume","Sands","Goblet","Circlet"}[Integer.parseInt(fields[1])]);
             itemDetails[2].setText("Level: " + fields[7]);
             itemDetails[3].setText(Equipment.intAttToStr(Integer.parseInt(fields[2].trim())) + ": " + values[0]);

@@ -19,8 +19,8 @@ public class MainFrame extends JFrame{
         allPanels[3] = new AddEquipmentGUI(true);
         allPanels[4] = new AddEquipmentGUI(false);
 
-        allPanels[5] = new ModifyEquipmentGUI(true);
-        allPanels[6] = new ModifyEquipmentGUI(false);
+        allPanels[5] = new ModifyArtifactGUI();
+        allPanels[6] = new ModifyWeaponGUI();
 
         allPanels[7] = new CalculateArtifactGUI();
         allPanels[8] = new CalculateTimeGUI();

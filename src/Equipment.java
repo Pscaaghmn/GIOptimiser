@@ -1,8 +1,11 @@
+import java.util.Arrays;
+
 public class Equipment {
     private int level;
     private int primaryAttribute;
     private double primaryValue;
     private static final String[] attAbbreviations = new String[]{"ATK", "ATK%", "DEF", "DEF%", "HP", "HP%", "CR", "CD", "EM", "ER", "HEA", "PHY", "PYR", "ELE", "CRY", "HYD", "ANE", "GEO", "DEN"};
+    private static final String[] attributes = new String[]{"ATK", "ATK%", "DEF", "DEF%", "HP", "HP%", "Crit Rate", "Crit Damage", "Elemental Mastery", "Energy Recharge", "Healing Bonus", "Physical DMG Bonus", "Pyro DMG Bonus", "Electro DMG Bonus", "Cryo DMG Bonus", "Hydro DMG Bonus", "Anemo DMG Bonus", "Geo DMG Bonus", "Dendro DMG Bonus"};
 
     public int getLevel() {
         return level;
@@ -28,23 +31,23 @@ public class Equipment {
         this.primaryValue = primaryValue;
     }
 
-    public void levelUp(){
-
-    }
-
-    public void levelUp(int times){
-        for (int i = 0; i < times; i++) {
-            levelUp();
-        }
-    }
-
     public String toString(int[] attFieldWidths, String[] connectedAttData, int[] valFieldWidths, String[] connectedValData, Boolean isAttribute){
         //Converts artifact data into a record format
         StringBuilder finalRecord = new StringBuilder();
 
         //Turning all data of equipment into a line that is to be written into the file
-        for (int i = 0; i < (isAttribute ? connectedAttData : connectedValData).length; i++) {
-            finalRecord.append(Database.pad((isAttribute ? connectedAttData : connectedValData)[i], (isAttribute ? attFieldWidths: valFieldWidths)[i]));
+        if(isAttribute) {
+            for (int i = 0; i < connectedAttData.length; i++) {
+                finalRecord.append(Database.pad((connectedAttData)[i], (attFieldWidths)[i]));
+            }
+        }else{
+            for (int i = 0; i < connectedValData.length; i++) {
+                if (connectedValData[i].length() > 4) {
+                    finalRecord.append(Database.pad(String.valueOf(Math.round(Float.parseFloat((connectedValData)[i]))), (valFieldWidths)[i]));
+                }else{
+                    finalRecord.append(Database.pad((connectedValData)[i], (valFieldWidths)[i]));
+                }
+            }
         }
 
         return finalRecord.toString();
@@ -52,15 +55,18 @@ public class Equipment {
 
     public static int strAttToInt(String attribute){
         //Single string
-        int i = 0;
-        while (i < attAbbreviations.length){
-            //Returns the index of the entered attribute
-            if(attribute.trim().toUpperCase().contains(attAbbreviations[i]) && attribute.contains("%") == attAbbreviations[i].contains("%")){
-                return i;
+        int indexInAttributesArray = Arrays.asList(attributes).indexOf(attribute);
+        if (indexInAttributesArray == -1){
+            int i = 0;
+            while (i < attAbbreviations.length){
+                //Returns the index of the entered attribute
+                if(attribute.trim().toUpperCase().contains(attAbbreviations[i]) && attribute.contains("%") == attAbbreviations[i].contains("%")){
+                    return i;
+                }
+                i++;
             }
-            i++;
         }
-        return -1;
+        return indexInAttributesArray;
     }
 
     public static int[] strAttToInt(String[] attributes){
@@ -73,8 +79,7 @@ public class Equipment {
     }
 
     public static String intAttToStr(int attribute){
-        String[] attAbbreviations = new String[]{"ATK", "ATK%", "DEF", "DEF%", "HP", "HP%", "Crit Rate", "Crit Damage", "Elemental Mastery", "Energy Recharge", "Healing Bonus", "Physical DMG Bonus", "Pyro DMG Bonus", "Electro DMG Bonus", "Cryo DMG Bonus", "Hydro DMG Bonus", "Anemo DMG Bonus", "Geo DMG Bonus", "Dendro DMG Bonus"};
-        return (attribute == -1 ? "" : attAbbreviations[attribute]);
+        return (attribute == -1 ? "" : attributes[attribute]);
     }
 
     public static String[] intAttToStr(int[] attributes){

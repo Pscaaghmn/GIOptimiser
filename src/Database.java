@@ -21,8 +21,12 @@ public class Database {
         if (data.length() > lineLength) {
             System.out.println("Could not append data. String too long. Data length " + data.length() + " is longer than " + lineLength);
         } else {
-            FileHandler.fileWrite(filename,-1, String.format("%1$-" + lineLength + "s", data)+ "\r\n");
-            recordCount++;
+            if (deletedRows.size() > 0){
+                FileHandler.fileWrite(filename,deletedRows.remove(0) * (lineLength + 2), data);
+            }else {
+                FileHandler.fileWrite(filename, -1, String.format("%1$-" + lineLength + "s", data) + "\r\n");
+                recordCount++;
+            }
         }
 
     }
