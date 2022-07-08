@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Set;
 
 public class ModifyEquipmentGUI extends AddEquipmentGUI implements ActionListener, ChangeListener {//TODO:Complete weapon half
 
@@ -18,7 +19,7 @@ public class ModifyEquipmentGUI extends AddEquipmentGUI implements ActionListene
     private JComboBox<String>[] secondaryAttributes;
     private JFormattedTextField[] secondaryValues;
 
-    public ModifyEquipmentGUI(Boolean isArtifact){
+    public ModifyEquipmentGUI(Boolean isArtifact){ //TODO: Finish for weapon and delete functionality
         super(isArtifact);
 
         addButton.setText("Save");
@@ -96,18 +97,20 @@ public class ModifyEquipmentGUI extends AddEquipmentGUI implements ActionListene
         nameComboBox.setSelectedItem(fields[0].trim());
         typeComboBox.setSelectedItem(new String[]{"Flower","Plume","Sands","Goblet","Circlet"}[Integer.parseInt(fields[1])]);
 
+        String[] attAbbreviations = new String[]{"ATK", "ATK%", "DEF", "DEF%", "HP", "HP%", "Crit Rate", "Crit Damage", "Elemental Mastery", "Energy Recharge", "Healing Bonus", "Physical DMG Bonus", "Pyro DMG Bonus", "Electro DMG Bonus", "Cryo DMG Bonus", "Hydro DMG Bonus", "Anemo DMG Bonus", "Geo DMG Bonus", "Dendro DMG Bonus"};
+
         if (isArtifact){
             String[] values = Database.recordToArray(contents[1].getRecord(fileIndex), new int[]{4, 4, 4, 4, 4});
 
             levelSlider.setValue(Integer.parseInt(fields[7].trim()));
-            mainAttributes.setSelectedIndex(Integer.parseInt(fields[2].trim()));
+            mainAttributes.setSelectedItem(attAbbreviations[Integer.parseInt(fields[2].trim())]);
             mainValue.setText(values[0].trim());
 
             itemDetails[1].setText("Piece: " + new String[]{"Flower","Plume","Sands","Goblet","Circlet"}[Integer.parseInt(fields[1])]);
             itemDetails[2].setText("Level: " + fields[7]);
             itemDetails[3].setText(Equipment.intAttToStr(Integer.parseInt(fields[2].trim())) + ": " + values[0]);
             for (int i = 0; i < 4; i++) {
-                secondaryAttributes[i].setSelectedIndex(Integer.parseInt(fields[i+3].trim()));
+                secondaryAttributes[i].setSelectedItem(attAbbreviations[Integer.parseInt(fields[i+3].trim())]);
                 secondaryValues[i].setValue(Double.parseDouble(values[i+1].trim()));
                 itemDetails[i+4].setText(Equipment.intAttToStr(Integer.parseInt(fields[i+3].trim())) + ": " + values[i+1]);
             }
@@ -208,7 +211,17 @@ public class ModifyEquipmentGUI extends AddEquipmentGUI implements ActionListene
         switch (e.getActionCommand()) {
             case "Home" -> MainFrame.navigate(isArtifact ? 5 : 6,0);
             case "Inventory" -> MainFrame.navigate(isArtifact ? 5 : 6, isArtifact ? 1 : 2);
-            case "Save" -> saveEquipmentChanges();
+            case "Save" -> {
+                String[] collectedAttributes = new String[4];
+                for (int i = 0; i < 4; i++) {
+                    collectedAttributes[i] = (String) secondaryAttributes[i].getSelectedItem();
+                }
+                if (new Set set ){
+                    //TODO: set (if duplicates it will be smaller
+                }
+
+                saveEquipmentChanges();
+            }
             case "comboBoxChanged" -> updateComboBoxes(e);
         }
     }
