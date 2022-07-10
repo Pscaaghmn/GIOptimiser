@@ -1,11 +1,31 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Equipment {
+    private String name;
     private int level;
+    private int type;
     private int primaryAttribute;
     private double primaryValue;
     private static final String[] attAbbreviations = new String[]{"ATK", "ATK%", "DEF", "DEF%", "HP", "HP%", "CR", "CD", "EM", "ER", "HEA", "PHY", "PYR", "ELE", "CRY", "HYD", "ANE", "GEO", "DEN"};
     private static final String[] attributes = new String[]{"ATK", "ATK%", "DEF", "DEF%", "HP", "HP%", "Crit Rate", "Crit Damage", "Elemental Mastery", "Energy Recharge", "Healing Bonus", "Physical DMG Bonus", "Pyro DMG Bonus", "Electro DMG Bonus", "Cryo DMG Bonus", "Hydro DMG Bonus", "Anemo DMG Bonus", "Geo DMG Bonus", "Dendro DMG Bonus"};
+
+    public Equipment(String name, int type, int primaryAttribute, double primaryValue, int level) {
+        this.name = name;
+        this.level = level;
+        this.type = type;
+        this.primaryAttribute = primaryAttribute;
+        this.primaryValue = primaryValue;
+    }
+
+    public Equipment(){
+    }
+
+    public String getName() {return name;}
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public int getLevel() {
         return level;
@@ -13,6 +33,14 @@ public class Equipment {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public int getPrimaryAttribute() {
@@ -89,6 +117,24 @@ public class Equipment {
             conversion[i] = intAttToStr(attributes[i]);
         }
         return conversion;
+    }
+
+    public static String[] getTypes(){
+        return null;
+    }
+
+    public static String[] getAttributes(){
+        return attributes;
+    }
+
+    public static String[] getAttributes(String[] exclude){
+        ArrayList<String> resultArrayList = new ArrayList<>(Arrays.asList(attributes));
+        Arrays.asList(attributes).removeAll(Arrays.asList(exclude));
+        return resultArrayList.toArray(String[]::new);
+    }
+
+    public static int[] getAttributeFieldWidths(){
+        return null;
     }
 
     public void display(){

@@ -26,8 +26,7 @@ public class AddEquipmentGUI extends JPanel implements ActionListener{
         JLabel nameLabel = new JLabel("Name:");
         JLabel typeLabel = new JLabel(isArtifact?"Piece:":"Type:");
         nameComboBox = new JComboBox<>(nameList);
-        typeComboBox = new JComboBox<>((isArtifact? "Flower,Plume,Sands,Goblet,Circlet"
-                        :"Sword,Claymore,Polearm,Bow,Catalyst").split(","));
+        typeComboBox = new JComboBox<>((isArtifact? Artifact.getTypes():Weapon.getTypes()));
 
         homeButton.setBounds(1030,500,70,50);
         inventoryButton.setBounds(1100,500,70,50);

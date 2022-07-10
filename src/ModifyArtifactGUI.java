@@ -9,35 +9,36 @@ import java.util.*;
 
 public class ModifyArtifactGUI extends ModifyEquipmentGUI implements ActionListener, ChangeListener {
 
-    private final JLabel[] itemDetails;
-    private final JComboBox<String>[] secondaryAttributes;
-    private final JFormattedTextField[] secondaryValues;
+    private final JLabel mainValue;
+    private final JComboBox<String>[] secondaryAttrComboBoxes;
+    private final JFormattedTextField[] secondaryValueFields;
 
     public ModifyArtifactGUI(){
         super(true);
 
         JLabel secondaryAttributesLabel = new JLabel("Substats:");
-        secondaryAttributes = new JComboBox[4];
+        secondaryAttrComboBoxes = new JComboBox[4];
+        mainValue = new JLabel();
 
-        secondaryValues = new JFormattedTextField[4];
+        secondaryValueFields = new JFormattedTextField[4];
         for (int i = 0; i < 4; i++) {
-            secondaryAttributes[i] = new JComboBox<>(new String[]{"ATK", "ATK%", "DEF", "DEF%", "HP", "HP%", "Crit Rate", "Crit Damage", "Elemental Mastery", "Energy Recharge"});
-            secondaryAttributes[i].setBounds(0, 270 + (50*i), 200, 50);
-            secondaryValues[i] = new JFormattedTextField(DecimalFormat.getInstance());
-            secondaryValues[i].setBounds(210, 280 + (50 * i), 70, 30);
-            secondaryValues[i].setColumns(4);
+            secondaryAttrComboBoxes[i] = new JComboBox<>(new String[]{"ATK", "ATK%", "DEF", "DEF%", "HP", "HP%", "Crit Rate", "Crit Damage", "Elemental Mastery", "Energy Recharge"});
+            secondaryAttrComboBoxes[i].setBounds(0, 270 + (50*i), 200, 50);
+            secondaryValueFields[i] = new JFormattedTextField(DecimalFormat.getInstance());
+            secondaryValueFields[i].setBounds(210, 280 + (50 * i), 70, 30);
+            secondaryValueFields[i].setColumns(4);
 
-            secondaryAttributes[i].addActionListener(this);
+            secondaryAttrComboBoxes[i].addActionListener(this);
 
-            this.add(secondaryAttributes[i]);
-            this.add(secondaryValues[i]);
+            this.add(secondaryAttrComboBoxes[i]);
+            this.add(secondaryValueFields[i]);
         }
 
-        itemDetails = new JLabel[8];
+        itemLabels = new JLabel[8];
         for (int i = 0; i < 8; i++) {
-            itemDetails[i] = new JLabel();
-            itemDetails[i].setBounds(900,100 + (i*20),200,20);
-            this.add(itemDetails[i]);
+            itemLabels[i] = new JLabel();
+            itemLabels[i].setBounds(900,100 + (i*20),200,20);
+            this.add(itemLabels[i]);
         }
 
         levelSlider.setMinimum(0);
@@ -45,51 +46,40 @@ public class ModifyArtifactGUI extends ModifyEquipmentGUI implements ActionListe
         levelSlider.setMajorTickSpacing(4);
         levelSlider.addChangeListener(this);
 
-        String[] possibleMainAttributes = new String[]{"ATK", "ATK%", "DEF%", "HP", "HP%", "Crit Rate", "Crit Damage", "Elemental Mastery", "Energy Recharge", "Healing Bonus", "Physical DMG Bonus", "Pyro DMG Bonus", "Electro DMG Bonus", "Cryo DMG Bonus", "Hydro DMG Bonus", "Anemo DMG Bonus", "Geo DMG Bonus", "Dendro DMG Bonus"};
         for (String attribute:
-                possibleMainAttributes) {
+                Artifact.getAttributes()) {
             mainAttributes.addItem(attribute);
         }
 
         secondaryAttributesLabel.setBounds(0, 220, 70, 50);
+        mainValue.setBounds(210,180,70,30);
 
         this.add(secondaryAttributesLabel);
-
+        this.add(mainValue);
     }
 
     public void importEquipment(int fileIndex){
         this.fileIndex = fileIndex;
+        Database attributesDatabase = new Database("artifact_att.txt", 39);
+        Database valuesDatabase = new Database("artifact_val.txt", 20);
+        target = new Artifact(attributesDatabase.getRecord(fileIndex),valuesDatabase.getRecord(fileIndex));
+
         populateFields();
     }
 
-    private void populateFields(){
-        Database attributesDatabase = new Database("artifact_att.txt", 39);
-        Database valuesDatabase = new Database("artifact_val.txt", 20);
+    protected void populateFields(){
+        super.populateFields();
+        itemLabels[1].setText("Piece: " + Artifact.getTypes()[target.getType()]);
 
-        String[] attributes = Database.recordToArray(attributesDatabase.getRecord(fileIndex),(new int[]{30, 1, 2, 1, 1, 1, 1, 2}));
-
-        itemDetails[0].setText("(" + (fileIndex < 9 ? "0" : "") + (fileIndex+1) + ") " + attributes[0].trim());
-        nameComboBox.setSelectedItem(attributes[0].trim());
-
-        typeComboBox.setSelectedItem(new String[]{"Flower","Plume","Sands","Goblet","Circlet"}[Integer.parseInt(attributes[1])]);
-
-        String[] attributeNames = new String[]{"ATK", "ATK%", "DEF", "DEF%", "HP", "HP%", "Crit Rate", "Crit Damage", "Elemental Mastery", "Energy Recharge", "Healing Bonus", "Physical DMG Bonus", "Pyro DMG Bonus", "Electro DMG Bonus", "Cryo DMG Bonus", "Hydro DMG Bonus", "Anemo DMG Bonus", "Geo DMG Bonus", "Dendro DMG Bonus"};
-
-        String[] values = Database.recordToArray(valuesDatabase.getRecord(fileIndex), new int[]{4, 4, 4, 4, 4});
-
-        levelSlider.setValue(Integer.parseInt(attributes[7].trim()));
-        mainAttributes.setSelectedItem(attributeNames[Integer.parseInt(attributes[2].trim())]);
-        mainValue.setText(values[0].trim());
-
-        itemDetails[1].setText("Piece: " + new String[]{"Flower","Plume","Sands","Goblet","Circlet"}[Integer.parseInt(attributes[1])]);
-        itemDetails[2].setText("Level: " + attributes[7]);
-        itemDetails[3].setText(Equipment.intAttToStr(Integer.parseInt(attributes[2].trim())) + ": " + values[0]);
+        mainValue.setText("" + target.getPrimaryValue());
         for (int i = 0; i < 4; i++) {
-            secondaryAttributes[i].setSelectedItem(attributeNames[Integer.parseInt(attributes[i+3].trim())]);
-            secondaryValues[i].setValue(Double.parseDouble(values[i+1].trim()));
-            itemDetails[i+4].setText(Equipment.intAttToStr(Integer.parseInt(attributes[i+3].trim())) + ": " + values[i+1]);
+            secondaryAttrComboBoxes[i].setSelectedItem(((Artifact)target).getSecondaryAttributes()[i]);
+            secondaryValueFields[i].setValue(((Artifact)target).getSecondaryValues()[i]);
+            itemLabels[i+4].setForeground(Color.MAGENTA);
+            itemLabels[i+4].setText(Equipment.intAttToStr
+                    (((Artifact)target).getSecondaryAttributes()[i]) + ": " +
+                    ((Artifact)target).getSecondaryValues()[i]);
         }
-
     }
 
     private void updateComboBoxes(ActionEvent e){
@@ -111,15 +101,15 @@ public class ModifyArtifactGUI extends ModifyEquipmentGUI implements ActionListe
             }
 
 
-        }else if(e.getSource() == mainAttributes && secondaryAttributes[0].getItemCount() > 0){
+        }else if(e.getSource() == mainAttributes && secondaryAttrComboBoxes[0].getItemCount() > 0){
 
             for (int i = 0; i < 4; i++) {
-                secondaryAttributes[i].removeAllItems();
+                secondaryAttrComboBoxes[i].removeAllItems();
                 String[] available = Arrays.stream(new String[]{"ATK", "ATK%", "DEF", "DEF%", "HP", "HP%", "Crit Rate", "Crit Damage", "Elemental Mastery", "Energy Recharge"})
                         .filter(a -> !a.equals(mainAttributes.getSelectedItem())).toArray(String[]::new);
                 for (String attribute:
                         available) {
-                    secondaryAttributes[i].addItem(attribute);
+                    secondaryAttrComboBoxes[i].addItem(attribute);
                 }
             }
 
@@ -145,25 +135,24 @@ public class ModifyArtifactGUI extends ModifyEquipmentGUI implements ActionListe
         ArrayList<Object> collectedAttributes = new ArrayList<>();
 
         for (int i = 0; i < 4; i++) {
-                collectedAttributes.add(secondaryAttributes[i].getSelectedItem());
+                collectedAttributes.add(secondaryAttrComboBoxes[i].getSelectedItem());
         }
 
         Set<Object> setOfAttributes = new HashSet<>(collectedAttributes);
         if (collectedAttributes.size() > setOfAttributes.size()) {
             for (int i = 0; i < setOfAttributes.size(); i++) {
-                secondaryAttributes[i].setSelectedItem(setOfAttributes.toArray()[i]);
+                secondaryAttrComboBoxes[i].setSelectedItem(setOfAttributes.toArray()[i]);
             }
             for (int i = setOfAttributes.size(); i < 4; i++) {
-                secondaryAttributes[i].setForeground(Color.RED);
+                secondaryAttrComboBoxes[i].setForeground(Color.RED);
             }
-
         } else {
 
             String[] collectedAttributesArray = new String[4];
             double[] collectedValues = new double[4];
             for (int i = 0; i < 4; i++) {
-                collectedAttributesArray[i] = (String) secondaryAttributes[i].getSelectedItem();
-                collectedValues[i] = Double.parseDouble(secondaryValues[i].getText());
+                collectedAttributesArray[i] = (String) secondaryAttrComboBoxes[i].getSelectedItem();
+                collectedValues[i] = Double.parseDouble(secondaryValueFields[i].getText());
             }
 
             Database attributes = new Database("artifact_att.txt", 39);
@@ -174,7 +163,7 @@ public class ModifyArtifactGUI extends ModifyEquipmentGUI implements ActionListe
             values.replaceRecord(fileIndex, newArtifact.toString(false));
 
             MainFrame.navigate(5, 1);
-            }
+        }
 
     }
 

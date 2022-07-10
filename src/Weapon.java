@@ -1,51 +1,37 @@
 public class Weapon extends Equipment{
-    private String name;
-    private int weaponType;
     private int refinementRank;
     private int baseATK;
+    private static final int[] fieldWidths = new int[]{40, 1, 1, 3, 2, 2, 4}; //53 total;
 
     public Weapon(String name, int weaponType, int refinementRank, int baseATK, String attribute, double value, int level) {
-        this.name = name;
-        this.weaponType = weaponType;
+        super(name,weaponType,Equipment.strAttToInt(attribute),value,level);
         this.refinementRank = refinementRank;
         this.baseATK = baseATK;
-
-        setPrimaryAttribute(Equipment.strAttToInt(attribute));
-        setLevel(level);
-        setPrimaryValue(value);
     }
 
     public Weapon(String name, int weaponType) {
-        this.name = name;
-        this.weaponType = weaponType;
-
-        //Preset
+        super(name,weaponType,0,0,0);
         refinementRank = 1;
         baseATK = 0;
-        setPrimaryAttribute(Equipment.strAttToInt("ATK%"));
-        setLevel(0);
-        setPrimaryValue(0);
     }
 
     public Weapon(String record){
-        int[] fieldWidths = new int[]{40, 1, 1, 3, 2, 2, 4}; //53 total
-
         String[] fields = Database.recordToArray(record, fieldWidths);
 
-        name = fields[0].trim();
-        weaponType = Integer.parseInt(fields[1].trim());
+        setName(fields[0].trim());
+        setType(Integer.parseInt(fields[1].trim()));
         refinementRank = Integer.parseInt(fields[2].trim());
         baseATK = Integer.parseInt(fields[3].trim());
         setPrimaryAttribute(Integer.parseInt(fields[4].trim()));
         setLevel(Integer.parseInt(fields[5].trim()));
-        setPrimaryValue(Integer.parseInt(fields[6].trim()));
+        setPrimaryValue(Double.parseDouble(fields[6].trim()));
     }
 
     public String toString(){
         int[] fieldWidths = new int[]{40, 1, 1, 3, 2, 2, 4}; //53 total
         String[] connectedWeaponData = new String[]
-                {name,
-                String.valueOf(weaponType),
+                {getName(),
+                String.valueOf(getType()),
                 String.valueOf(refinementRank),
                 String.valueOf(baseATK),
                 String.valueOf(getPrimaryAttribute()),
@@ -53,5 +39,33 @@ public class Weapon extends Equipment{
                 String.valueOf(getPrimaryValue())};
 
         return super.toString(fieldWidths, connectedWeaponData, new int[]{}, new String[]{}, true);
+    }
+
+    public int getRefinementRank() {
+        return refinementRank;
+    }
+
+    public void setRefinementRank(int refinementRank) {
+        this.refinementRank = refinementRank;
+    }
+
+    public int getBaseATK() {
+        return baseATK;
+    }
+
+    public void setBaseATK(int baseATK) {
+        this.baseATK = baseATK;
+    }
+
+    public static String[] getTypes(){
+        return new String[]{"Sword","Claymore","Polearm","Bow","Catalyst"};
+    }
+
+    public static String[] getAttributes(){
+        return new String[]{"ATK%", "DEF%", "HP%", "Crit Rate", "Crit Damage", "Elemental Mastery", "Energy Recharge", "Physical DMG Bonus"};
+    }
+
+    public static int[] getAttributeFieldWidths(){
+        return fieldWidths;
     }
 }

@@ -1,51 +1,69 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.*;
 
-public class ModifyWeaponGUI extends ModifyEquipmentGUI implements ActionListener{//TODO:Complete weapon half
+public class ModifyWeaponGUI extends ModifyEquipmentGUI implements ActionListener{
 
-    private final JLabel[] itemDetails;
+    private final JFormattedTextField mainValue;
+    private final JFormattedTextField refinementRank;
+    private final JFormattedTextField baseATK;
 
     public ModifyWeaponGUI(){
         super(false);
-        itemDetails = new JLabel[5];
+
+        JLabel refinementRankLabel = new JLabel("Refinement Rank:");
+        JLabel baseATKLabel = new JLabel("Base ATK:");
+        refinementRank = new JFormattedTextField(NumberFormat.getInstance());
+        baseATK = new JFormattedTextField(NumberFormat.getInstance());
+        mainValue = new JFormattedTextField(DecimalFormat.getInstance());
+        refinementRank.setColumns(1);
+        baseATK.setColumns(4);
+        mainValue.setColumns(4);
+
+        itemLabels = new JLabel[5];
         for (int i = 0; i < 5; i++) {
-            itemDetails[i] = new JLabel();
-            itemDetails[i].setBounds(900,100 + (i*20),200,20);
-            this.add(itemDetails[i]);
+            itemLabels[i] = new JLabel();
+            itemLabels[i].setBounds(900,100 + (i*20),200,20);
+            this.add(itemLabels[i]);
         }
 
         levelSlider.setMinimum(0);
         levelSlider.setMaximum(90);
         levelSlider.setMajorTickSpacing(10);
 
+        for (String attribute:
+                Weapon.getAttributes()) {
+            mainAttributes.addItem(attribute);
+        }
 
-        //TODO: Finish for weapon and delete functionality
-        String[] weaponPrimaryAttributeNames = new String[]{"ATK%", "DEF%", "HP%", "Crit Rate", "Crit Damage", "Elemental Mastery", "Energy Recharge", "Physical DMG Bonus"};
-        mainAttributes = new JComboBox<>(weaponPrimaryAttributeNames);
-        //...
+        baseATKLabel.setBounds(0,220,70,50);
+        baseATK.setBounds(70,230,70,30);
+        refinementRankLabel.setBounds(200,220,110,50);
+        refinementRank.setBounds(310,230,70,30);
+        mainValue.setBounds(210,180,70,30);
+
+        this.add(baseATKLabel);
+        this.add(baseATK);
+        this.add(refinementRankLabel);
+        this.add(refinementRank);
+        this.add(mainValue);
     }
 
     public void importEquipment(int fileIndex){
         this.fileIndex = fileIndex;
+        Database weaponStatsDatabase = new Database("weapon_stats.txt",53);
+        target = new Weapon(weaponStatsDatabase.getRecord(fileIndex));
         populateFields();
     }
 
-    private void populateFields(){
-        Database weaponStatsDatabase = new Database("weapon_stats.txt",53);
-
-        String[] fields = Database.recordToArray(weaponStatsDatabase.getRecord(fileIndex), new int[]{40, 1, 1, 3, 2, 2, 4});
-
-        typeComboBox.setSelectedItem(new String[]{"Sword","Claymore","Polearm","Bow","Catalyst"}[Integer.parseInt(fields[1])]);
-
-        levelSlider.setValue(Integer.parseInt(fields[5].trim()));
-
-        itemDetails[1].setText("Refinement Rank: " + fields[2]);
-        itemDetails[2].setText("Level: " + fields[5]);
-        itemDetails[3].setText("Base ATK: " + fields[3]);
-        itemDetails[4].setText(Equipment.intAttToStr(Integer.parseInt(fields[4].trim())) + ": " + fields[6]);
-
+    protected void populateFields(){
+        super.populateFields();
+        itemLabels[1].setText("Refinement Rank: " + ((Weapon)target).getRefinementRank());
+        mainValue.setText("" + target.getPrimaryValue());
+        itemLabels[4].setText("Base ATK: " + ((Weapon)target).getBaseATK());
     }
 
     private void updateComboBoxes(ActionEvent e){
@@ -60,11 +78,18 @@ public class ModifyWeaponGUI extends ModifyEquipmentGUI implements ActionListene
     }
 
     private void saveEquipmentChanges(){
-        //TODO: Weapon saving
+        Database weaponDatabase = new Database("weapon_stats.txt", 53);
+        Weapon newWeapon = new Weapon((String)nameComboBox.getSelectedItem(), typeComboBox.getSelectedIndex(), Integer.parseInt(refinementRank.getText()), Integer.parseInt(baseATK.getText()), (String) mainAttributes.getSelectedItem(), Double.parseDouble(mainValue.getText()), levelSlider.getValue());
+
+        weaponDatabase.replaceRecord(fileIndex, newWeapon.toString());
+
+        MainFrame.navigate(6, 2);
     }
 
     private void deleteEquipment(){
-
+        Database weaponDatabase = new Database("weapon_stats.txt", 53);
+        weaponDatabase.deleteRecord(fileIndex);
+        MainFrame.navigate(6,2);
     }
 
     @Override
