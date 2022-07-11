@@ -39,8 +39,6 @@ public class ModifyEquipmentGUI extends AddEquipmentGUI implements ActionListene
     }
 
     public void importEquipment(int fileIndex){
-        this.fileIndex = fileIndex;
-        target = new Equipment();
     }
 
     protected void populateFields(){

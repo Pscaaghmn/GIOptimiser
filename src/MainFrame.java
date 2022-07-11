@@ -16,10 +16,8 @@ public class MainFrame extends JFrame{
 
         allPanels[1] = new InventoryGUI(true);
         allPanels[2] = new InventoryGUI(false);
-
         allPanels[3] = new AddEquipmentGUI(true);
         allPanels[4] = new AddEquipmentGUI(false);
-
         allPanels[5] = new ModifyArtifactGUI();
         allPanels[6] = new ModifyWeaponGUI();
 
@@ -29,14 +27,12 @@ public class MainFrame extends JFrame{
         allPanels[9] = new CalculateArtifactGUI();
 
         setLayout(null);
-
         for (int i = 0; i < allPanels.length; i++) {
             this.add(allPanels[i]);
             allPanels[i].setBounds(0,0,1500,maxHeight);
 
             allPanels[i].setVisible(i == 0);
         }
-
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }

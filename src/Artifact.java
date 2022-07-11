@@ -1,9 +1,6 @@
 import java.util.Arrays;
 
 public class Artifact extends Equipment{
-    //Flower: 0, Plume: 1, Sands: 2, Goblet: 3, Circlet: 4
-    //Attribute indexes: ATK(0) ATK%(1) DEF(2) DEF%(3) HP(4) HP%(5) CR(6) CD(7) EM(8) ER(9) HEAL(10) PHYS(11) PYRO(12) ELEC(13) CRYO(14) HYDR(15) ANEM(16) GEO(17) DEND(18)
-
     private int[] secondaryAttributes;
     private double[] secondaryValues;
 

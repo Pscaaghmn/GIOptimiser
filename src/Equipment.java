@@ -7,8 +7,11 @@ public class Equipment {
     private int type;
     private int primaryAttribute;
     private double primaryValue;
-    private static final String[] attAbbreviations = new String[]{"ATK", "ATK%", "DEF", "DEF%", "HP", "HP%", "CR", "CD", "EM", "ER", "HEA", "PHY", "PYR", "ELE", "CRY", "HYD", "ANE", "GEO", "DEN"};
-    private static final String[] attributes = new String[]{"ATK", "ATK%", "DEF", "DEF%", "HP", "HP%", "Crit Rate", "Crit Damage", "Elemental Mastery", "Energy Recharge", "Healing Bonus", "Physical DMG Bonus", "Pyro DMG Bonus", "Electro DMG Bonus", "Cryo DMG Bonus", "Hydro DMG Bonus", "Anemo DMG Bonus", "Geo DMG Bonus", "Dendro DMG Bonus"};
+    private static final String[] attAbbreviations =
+            new String[]{"ATK", "ATK%", "DEF", "DEF%", "HP", "HP%", "CR", "CD", "EM", "ER", "HEA", "PHY", "PYR", "ELE", "CRY", "HYD", "ANE", "GEO", "DEN"};
+    private static final String[] attributes =
+            new String[]{"ATK", "ATK%", "DEF", "DEF%", "HP", "HP%", "Crit Rate", "Crit Damage", "Elemental Mastery", "Energy Recharge", "Healing Bonus",
+                    "Physical DMG Bonus", "Pyro DMG Bonus", "Electro DMG Bonus", "Cryo DMG Bonus", "Hydro DMG Bonus", "Anemo DMG Bonus", "Geo DMG Bonus", "Dendro DMG Bonus"};
 
     public Equipment(String name, int type, int primaryAttribute, double primaryValue, int level) {
         this.name = name;

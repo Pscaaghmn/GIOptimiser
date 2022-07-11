@@ -56,6 +56,7 @@ public class ModifyWeaponGUI extends ModifyEquipmentGUI implements ActionListene
         this.fileIndex = fileIndex;
         Database weaponStatsDatabase = new Database("weapon_stats.txt",53);
         target = new Weapon(weaponStatsDatabase.getRecord(fileIndex));
+
         populateFields();
     }
 

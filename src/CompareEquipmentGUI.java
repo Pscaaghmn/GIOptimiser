@@ -102,30 +102,30 @@ public class CompareEquipmentGUI extends JPanel implements ActionListener {
         HashSet<Integer> unionOfAttributes = new HashSet<>();
 
         if (isArtifact){
-            firstLabels.add(new JLabel("(" + (fileIndices[0] < 9 ? "0" : "") + (fileIndices[0]+1) + ") " + firstItem.getName()));
+            firstLabels.push(new JLabel("(" + (fileIndices[0] < 9 ? "0" : "") + (fileIndices[0]+1) + ") " + firstItem.getName()));
             firstLabels.peek().setForeground(Color.blue);
-            firstLabels.add(new JLabel("Piece: " + Artifact.getTypes()[firstItem.getType()]));
-            firstLabels.add(new JLabel("Level: " + firstItem.getLevel()));
-            firstLabels.add(new JLabel(Equipment.intAttToStr(firstItem.getPrimaryAttribute()) + ": " + firstItem.getPrimaryValue()));
+            firstLabels.push(new JLabel("Piece: " + Artifact.getTypes()[firstItem.getType()]));
+            firstLabels.push(new JLabel("Level: " + firstItem.getLevel()));
+            firstLabels.push(new JLabel(Equipment.intAttToStr(firstItem.getPrimaryAttribute()) + ": " + firstItem.getPrimaryValue()));
             unionOfAttributes.add(firstItem.getPrimaryAttribute());
 
             for (int i = 0; i < 4; i++) {
-                firstLabels.add(new JLabel(Equipment.intAttToStr
+                firstLabels.push(new JLabel(Equipment.intAttToStr
                         (((Artifact)firstItem).getSecondaryAttributes()[i]) + ": " +
                         ((Artifact)firstItem).getSecondaryValues()[i]));
                 firstLabels.peek().setForeground(Color.MAGENTA);
                 unionOfAttributes.add(((Artifact)firstItem).getSecondaryAttributes()[i]);
             }
 
-            secondLabels.add(new JLabel("(" + (fileIndices[1] < 9 ? "0" : "") + (fileIndices[1]+1) + ") " + secondItem.getName()));
-            secondLabels.get(0).setForeground(Color.orange);
-            secondLabels.add(new JLabel("Piece: " + Artifact.getTypes()[secondItem.getType()]));
-            secondLabels.add(new JLabel("Level: " + secondItem.getLevel()));
-            secondLabels.add(new JLabel(Equipment.intAttToStr(secondItem.getPrimaryAttribute()) + ": " + secondItem.getPrimaryValue()));
+            secondLabels.push(new JLabel("(" + (fileIndices[1] < 9 ? "0" : "") + (fileIndices[1]+1) + ") " + secondItem.getName()));
+            secondLabels.peek().setForeground(Color.orange);
+            secondLabels.push(new JLabel("Piece: " + Artifact.getTypes()[secondItem.getType()]));
+            secondLabels.push(new JLabel("Level: " + secondItem.getLevel()));
+            secondLabels.push(new JLabel(Equipment.intAttToStr(secondItem.getPrimaryAttribute()) + ": " + secondItem.getPrimaryValue()));
             unionOfAttributes.add(secondItem.getPrimaryAttribute());
 
             for (int i = 0; i < 4; i++) {
-                secondLabels.add(new JLabel(Equipment.intAttToStr
+                secondLabels.push(new JLabel(Equipment.intAttToStr
                         (((Artifact)secondItem).getSecondaryAttributes()[i]) + ": " +
                         ((Artifact)secondItem).getSecondaryValues()[i]));
                 secondLabels.peek().setForeground(Color.MAGENTA);
@@ -141,14 +141,19 @@ public class CompareEquipmentGUI extends JPanel implements ActionListener {
 
             for (int i = 0; i < unionOfAttributes.size(); i++) {
                 Integer attribute = (Integer) unionOfAttributes.toArray()[i];
+                //If both sides have the same value for an attribute
                 if (higherValueArtifact(attribute).equals("Equal")){
-                    firstAttributeLabels.add(new JLabel(Equipment.intAttToStr(attribute)));
-                    firstAttributeLabels.peek().setAlignmentX(Component.CENTER_ALIGNMENT);
-                    firstAttributeLabels.peek().setForeground(Color.darkGray);
-                    firstAttributePanel.add(firstAttributeLabels.peek());
-                    secondAttributeLabels.add(new JLabel(Equipment.intAttToStr(attribute)));
+                    firstAttributeLabels.push(new JLabel(Equipment.intAttToStr(attribute)));
+                    secondAttributeLabels.push(new JLabel(Equipment.intAttToStr(attribute)));
+
+                    //Index of top item in the stack as an integer is different for both label collections
                     secondAttributeLabels.peek().setAlignmentX(Component.CENTER_ALIGNMENT);
+                    firstAttributeLabels.peek().setAlignmentX(Component.CENTER_ALIGNMENT);
+
+                    firstAttributeLabels.peek().setForeground(Color.darkGray);
                     secondAttributeLabels.peek().setForeground(Color.darkGray);
+
+                    firstAttributePanel.add(firstAttributeLabels.peek());
                     secondAttributePanel.add(secondAttributeLabels.peek());
                 }else if (higherValueArtifact(attribute).equals(firstItem.getName())){
                     firstAttributeLabels.add(new JLabel(Equipment.intAttToStr(attribute)));
@@ -159,7 +164,7 @@ public class CompareEquipmentGUI extends JPanel implements ActionListener {
                         usefulFirstCount++;
                     }
                 }else{
-                    secondAttributeLabels.add(new JLabel(Equipment.intAttToStr(attribute)));
+                    secondAttributeLabels.push(new JLabel(Equipment.intAttToStr(attribute)));
                     secondAttributeLabels.peek().setAlignmentX(Component.CENTER_ALIGNMENT);
                     secondAttributeLabels.peek().setForeground(Color.orange);
                     secondAttributePanel.add(secondAttributeLabels.peek());
@@ -178,19 +183,19 @@ public class CompareEquipmentGUI extends JPanel implements ActionListener {
             }
 
         }else{
-            firstLabels.add(new JLabel("(" + (fileIndices[0] < 9 ? "0" : "") + (fileIndices[0]+1) + ") " + firstItem.getName()));
+            firstLabels.push(new JLabel("(" + (fileIndices[0] < 9 ? "0" : "") + (fileIndices[0]+1) + ") " + firstItem.getName()));
             firstLabels.get(0).setForeground(Color.blue);
-            firstLabels.add(new JLabel("Refinement Rank: " + ((Weapon)firstItem).getRefinementRank()));
-            firstLabels.add(new JLabel("Level: " + firstItem.getLevel()));
-            firstLabels.add(new JLabel("Base ATK: " + ((Weapon)firstItem).getBaseATK()));
-            firstLabels.add(new JLabel(Equipment.intAttToStr(firstItem.getPrimaryAttribute()) + ": " + firstItem.getPrimaryValue()));
+            firstLabels.push(new JLabel("Refinement Rank: " + ((Weapon)firstItem).getRefinementRank()));
+            firstLabels.push(new JLabel("Level: " + firstItem.getLevel()));
+            firstLabels.push(new JLabel("Base ATK: " + ((Weapon)firstItem).getBaseATK()));
+            firstLabels.push(new JLabel(Equipment.intAttToStr(firstItem.getPrimaryAttribute()) + ": " + firstItem.getPrimaryValue()));
 
-            secondLabels.add(new JLabel("(" + (fileIndices[1] < 9 ? "0" : "") + (fileIndices[1]+1) + ") " + secondItem.getName()));
+            secondLabels.push(new JLabel("(" + (fileIndices[1] < 9 ? "0" : "") + (fileIndices[1]+1) + ") " + secondItem.getName()));
             secondLabels.get(0).setForeground(Color.orange);
-            secondLabels.add(new JLabel("Refinement Rank: " + ((Weapon)secondItem).getRefinementRank()));
-            secondLabels.add(new JLabel("Level: " + secondItem.getLevel()));
-            secondLabels.add(new JLabel("Base ATK: " + ((Weapon)secondItem).getBaseATK()));
-            secondLabels.add(new JLabel(Equipment.intAttToStr(secondItem.getPrimaryAttribute()) + ": " + secondItem.getPrimaryValue()));
+            secondLabels.push(new JLabel("Refinement Rank: " + ((Weapon)secondItem).getRefinementRank()));
+            secondLabels.push(new JLabel("Level: " + secondItem.getLevel()));
+            secondLabels.push(new JLabel("Base ATK: " + ((Weapon)secondItem).getBaseATK()));
+            secondLabels.push(new JLabel(Equipment.intAttToStr(secondItem.getPrimaryAttribute()) + ": " + secondItem.getPrimaryValue()));
         }
 
         for (int i = 0; i < firstLabels.size(); i++) {

@@ -62,7 +62,8 @@ public class Weapon extends Equipment{
     }
 
     public static String[] getAttributes(){
-        return new String[]{"ATK%", "DEF%", "HP%", "Crit Rate", "Crit Damage", "Elemental Mastery", "Energy Recharge", "Physical DMG Bonus"};
+        return new String[]{"ATK%", "DEF%", "HP%", "Crit Rate", "Crit Damage",
+                "Elemental Mastery", "Energy Recharge", "Physical DMG Bonus"};
     }
 
     public static int[] getAttributeFieldWidths(){
