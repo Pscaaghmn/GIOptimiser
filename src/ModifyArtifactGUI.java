@@ -162,7 +162,7 @@ public class ModifyArtifactGUI extends ModifyEquipmentGUI implements ActionListe
             attributes.replaceRecord(fileIndex, newArtifact.toString(true));
             values.replaceRecord(fileIndex, newArtifact.toString(false));
 
-            MainFrame.navigate(5, 1);
+            MainFrame.navigate(5, 1, null);
         }
 
     }
@@ -179,7 +179,7 @@ public class ModifyArtifactGUI extends ModifyEquipmentGUI implements ActionListe
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "Home" -> MainFrame.navigate(5,0);
-            case "Inventory" -> MainFrame.navigate(5,1);
+            case "Inventory" -> MainFrame.navigate(5,1, null);
             case "Save" -> saveEquipmentChanges();
             case "DELETE" -> deleteEquipment();
             case "comboBoxChanged" -> updateComboBoxes(e);

@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
 public class MainFrame extends JFrame{
     private static JPanel[] allPanels;
@@ -10,7 +11,7 @@ public class MainFrame extends JFrame{
         setBounds(0,0, 1500, maxHeight);
         setResizable(true);
 
-        allPanels = new JPanel[9];
+        allPanels = new JPanel[10];
         allPanels[0] = new MainMenuGUI();
 
         allPanels[1] = new InventoryGUI(true);
@@ -22,8 +23,10 @@ public class MainFrame extends JFrame{
         allPanels[5] = new ModifyArtifactGUI();
         allPanels[6] = new ModifyWeaponGUI();
 
-        allPanels[7] = new CalculateArtifactGUI();
-        allPanels[8] = new CalculateTimeGUI();
+        allPanels[7] = new CompareEquipmentGUI(true);
+        allPanels[8] = new CompareEquipmentGUI(false);
+
+        allPanels[9] = new CalculateArtifactGUI();
 
         setLayout(null);
 
@@ -39,16 +42,19 @@ public class MainFrame extends JFrame{
     }
 
     public static void navigate(int hidePanel, int showPanel){
-        if (showPanel == 1 || showPanel == 2){
-            ((InventoryGUI) allPanels[showPanel]).loadItems();
-        }
-
-        if (showPanel < 0){
-            ((ModifyEquipmentGUI) allPanels[4 + hidePanel]).importEquipment(-1 * showPanel - 1);
-            showPanel = 4 + hidePanel;
-        }
-
         allPanels[hidePanel].setVisible(false);
         allPanels[showPanel].setVisible(true);
+    }
+
+    public static void navigate(int hidePanel, int showPanel, int[] loadData) {
+        if (loadData == null){
+            ((InventoryGUI) allPanels[showPanel]).loadItems();
+        }else if (loadData.length == 1) {
+            ((ModifyEquipmentGUI) allPanels[showPanel]).importEquipment(loadData[0]);
+        }else{
+            ((CompareEquipmentGUI) allPanels[showPanel]).loadItems(loadData);
+        }
+
+        navigate(hidePanel, showPanel);
     }
 }

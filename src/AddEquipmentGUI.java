@@ -55,7 +55,7 @@ public class AddEquipmentGUI extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "Home" -> MainFrame.navigate((isArtifact ? 3 : 4),0);
-            case "Inventory" -> MainFrame.navigate((isArtifact ? 3 : 4),(isArtifact ? 1 : 2));
+            case "Inventory" -> MainFrame.navigate((isArtifact ? 3 : 4),(isArtifact ? 1 : 2), null);
             case "Add" -> {
                 if (isArtifact) {
 

@@ -129,7 +129,7 @@ public class Equipment {
 
     public static String[] getAttributes(String[] exclude){
         ArrayList<String> resultArrayList = new ArrayList<>(Arrays.asList(attributes));
-        Arrays.asList(attributes).removeAll(Arrays.asList(exclude));
+        resultArrayList.removeAll(Arrays.asList(exclude));
         return resultArrayList.toArray(String[]::new);
     }
 

@@ -45,9 +45,10 @@ public class ModifyEquipmentGUI extends AddEquipmentGUI implements ActionListene
 
     protected void populateFields(){
         itemLabels[0].setText("(" + (fileIndex < 9 ? "0" : "") + (fileIndex+1) + ") " + target.getName());
-        nameComboBox.setSelectedItem(target.getName());
-
         typeComboBox.setSelectedItem(Artifact.getTypes()[target.getType()]);
+        System.out.println(target.getType());
+        nameComboBox.setSelectedItem(target.getName());
+        System.out.println(target.getName());
 
         levelSlider.setValue(target.getLevel());
         mainAttributes.setSelectedItem(Equipment.intAttToStr(target.getPrimaryAttribute()));

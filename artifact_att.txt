@@ -1,11 +1,6 @@
-Archaic Petra                 04<DEL!#>
-Husk of Opulent Dreams        317367820
-Emblem of Severed Fate        29 671220
-Bloodstained Chivalry         21 052312
-Crimson Witch of Flames       31113687 
-Echoes of an Offering         40 01230 
-Heart of Depth                20 01230 
-Lavawalker                    40 01230 
-Gladiator's Finale            10 28944 
-Archaic Petra                 00 01230 
-Blizzard Strayer              04 67150 
+Archaic Petra                 04 350120
+Blizzard Strayer              21 705320
+Bloodstained Chivalry         20 01230 
+Tenacity of the Millelith     10 01230 
+Vermillion Hereafter          30 01230 
+Vermillion Hereafter          40 01230 

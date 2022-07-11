@@ -89,14 +89,14 @@ public class ModifyWeaponGUI extends ModifyEquipmentGUI implements ActionListene
     private void deleteEquipment(){
         Database weaponDatabase = new Database("weapon_stats.txt", 53);
         weaponDatabase.deleteRecord(fileIndex);
-        MainFrame.navigate(6,2);
+        MainFrame.navigate(6,2, null);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "Home" -> MainFrame.navigate(6,0);
-            case "Inventory" -> MainFrame.navigate(6,2);
+            case "Inventory" -> MainFrame.navigate(6,2, null);
             case "Save" -> saveEquipmentChanges();
             case "DELETE" -> deleteEquipment();
             case "comboBoxChanged" -> updateComboBoxes(e);

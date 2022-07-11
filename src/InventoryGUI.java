@@ -14,17 +14,22 @@ public class InventoryGUI extends JPanel implements ActionListener {
     private ArrayList<Equipment> items;
     private final JComboBox<String> sortOptionsComboBox;
     private final ArrayList<JButton> itemButtons;
-    private final JLabel[] itemLabels;
+    private final JPanel labelBox;
+    private final ArrayList<JLabel> itemLabels;
     private final JButton order;
     private final JPanel itemsBox;
+
+    private boolean compareMode;
 
     public InventoryGUI(Boolean isArtifact){
         this.setLayout(null);
         this.isArtifact = isArtifact;
+        compareMode = false;
 
+        labelBox = new JPanel();
         itemButtons = new ArrayList<>();
 
-        itemLabels = new JLabel[(isArtifact ? 8 : 5)];
+        itemLabels = new ArrayList<>();
         order = new JButton("^");
 
         JButton homeButton = new JButton("Home");
@@ -52,15 +57,12 @@ public class InventoryGUI extends JPanel implements ActionListener {
         editItemButton.setBounds(1000,500,100,50);
         compareItemsButton.setBounds(1100,500,100,50);
         sortOptionsComboBox.setBounds(0,500,200,50);
-        for (int i = 0; i < itemLabels.length; i++) {
-            itemLabels[i] = new JLabel();
-            itemLabels[i].setBounds(900,100 + (i*20),200,20);
-            this.add(itemLabels[i]);
-        }
+
+        labelBox.setBounds(900,100,200,200);
+        labelBox.setLayout(new BoxLayout(labelBox, BoxLayout.Y_AXIS));
 
         itemsBox.setBounds(0,70,800,420);
         itemsBox.setLayout(new GridLayout(0,5));
-
 
         order.addActionListener(this);
         homeButton.addActionListener(this);
@@ -83,6 +85,7 @@ public class InventoryGUI extends JPanel implements ActionListener {
         this.add(compareItemsButton);
         this.add(sortOptionsComboBox);
         this.add(itemsBox);
+        this.add(labelBox);
     }
 
     public void loadItems(){
@@ -258,35 +261,45 @@ public class InventoryGUI extends JPanel implements ActionListener {
     }
 
     private void populateDescriptionLabels(int buttonIndex){
+        labelBox.removeAll();
+        itemLabels.clear();
         if (isArtifact){
             Artifact target = (Artifact) items.get(buttonIndex);
-            itemLabels[0].setText("(" + (buttonIndex < 9 ? "0" : "") + (buttonIndex+1) + ") " + target.getName());
-            itemLabels[1].setText("Piece: " + Artifact.getTypes()[target.getType()]);
-            itemLabels[2].setText("Level: " + target.getLevel());
-            itemLabels[3].setText(Equipment.intAttToStr(target.getPrimaryAttribute()) + ": " + target.getPrimaryValue());
+            itemLabels.add(new JLabel("(" + (buttonIndex < 9 ? "0" : "") + (buttonIndex+1) + ") " + target.getName()));
+            itemLabels.add(new JLabel("Piece: " + Artifact.getTypes()[target.getType()]));
+            itemLabels.add(new JLabel("Level: " + target.getLevel()));
+            itemLabels.add(new JLabel(Equipment.intAttToStr(target.getPrimaryAttribute()) + ": " + target.getPrimaryValue()));
 
             for (int i = 0; i < 4; i++) {
-                itemLabels[i+4].setForeground(Color.MAGENTA);
-                itemLabels[i+4].setText(Equipment.intAttToStr
+                itemLabels.add(new JLabel(Equipment.intAttToStr
                         (target.getSecondaryAttributes()[i]) + ": " +
-                        target.getSecondaryValues()[i]);
+                        target.getSecondaryValues()[i]));
+                itemLabels.get(i+4).setForeground(Color.MAGENTA);
             }
         }else{
             Weapon target = (Weapon) items.get(buttonIndex);
-            itemLabels[0].setText("(" + (buttonIndex < 9 ? "0" : "") + (buttonIndex+1) + ") " + target.getName());
-            itemLabels[1].setText("Refinement Rank: " + target.getRefinementRank());
-            itemLabels[2].setText("Level: " + target.getLevel());
-            itemLabels[3].setText("Base ATK: " + target.getBaseATK());
-            itemLabels[4].setText(Equipment.intAttToStr(target.getPrimaryAttribute()) + ": " + target.getPrimaryValue());
+            itemLabels.add(new JLabel("(" + (buttonIndex < 9 ? "0" : "") + (buttonIndex+1) + ") " + target.getName()));
+            itemLabels.add(new JLabel("Refinement Rank: " + target.getRefinementRank()));
+            itemLabels.add(new JLabel("Level: " + target.getLevel()));
+            itemLabels.add(new JLabel("Base ATK: " + target.getBaseATK()));
+            itemLabels.add(new JLabel(Equipment.intAttToStr(target.getPrimaryAttribute()) + ": " + target.getPrimaryValue()));
         }
+
+        for (JLabel l:
+             itemLabels) {
+            labelBox.add(l);
+        }
+
+        labelBox.revalidate();
+        labelBox.repaint();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "Home" -> MainFrame.navigate((isArtifact ? 1 : 2), 0);
-            case "Artifacts" -> MainFrame.navigate(2, 1);
-            case "Weapons" -> MainFrame.navigate(1, 2);
+            case "Artifacts" -> MainFrame.navigate(2, 1, null);
+            case "Weapons" -> MainFrame.navigate(1, 2, null);
             case "Add New Artifact" -> MainFrame.navigate(1, 3);
             case "Add New Weapon" -> MainFrame.navigate(2, 4);
             case "^" -> {
@@ -298,9 +311,42 @@ public class InventoryGUI extends JPanel implements ActionListener {
                 sort((String) Objects.requireNonNull(sortOptionsComboBox.getSelectedItem()));
             }
             case "comboBoxChanged" -> sort((String) Objects.requireNonNull(sortOptionsComboBox.getSelectedItem()));
-            case "Edit" -> MainFrame.navigate((isArtifact ? 1 : 2), -1 * Integer.parseInt(itemLabels[0].getText().substring(1, 3)));
-            default -> populateDescriptionLabels(Integer.parseInt(e.getActionCommand().substring(0, 2)) - 1);
+            case "Edit" -> {
+                if (itemLabels.size() != 0) {
+                    MainFrame.navigate((isArtifact ? 1 : 2), (isArtifact ? 5 : 6),
+                            new int[]{Integer.parseInt(itemLabels.get(0).getText().substring(1, 3)) - 1});
+                }
+            }
+            case "Compare" -> {
+                if (itemLabels.size() != 0) {
+                    if (compareMode) {
+                        for (JButton b:
+                             itemButtons) {
+                            b.setEnabled(true);
+                        }
+
+                        compareMode = false;
+                    } else {
+                        int i = 0;
+                        while (i < items.size()){
+                            if (i == Integer.parseInt(itemLabels.get(0).getText().substring(1, 3)) - 1){
+                                itemButtons.get(i).setEnabled(false);
+                            }
+                            i++;
+                        }
+                        compareMode = true;
+                    }
+                }
+            }
+            default -> {
+                if (compareMode){
+                    compareMode = false;
+                    MainFrame.navigate((isArtifact ? 1 : 2), (isArtifact ? 7 : 8),
+                            new int[]{Integer.parseInt(itemLabels.get(0).getText().substring(1, 3)) - 1, Integer.parseInt(e.getActionCommand().substring(0, 2)) - 1});
+                }else{
+                    populateDescriptionLabels(Integer.parseInt(e.getActionCommand().substring(0, 2)) - 1);
+                }
+            }
         }
     }
-
 }
