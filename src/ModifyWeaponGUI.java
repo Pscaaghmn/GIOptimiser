@@ -64,8 +64,7 @@ public class ModifyWeaponGUI extends ModifyEquipmentGUI implements ActionListene
         super.populateFields();
         itemLabels[1].setText("Refinement Rank: " + ((Weapon)target).getRefinementRank());
         refinementRank.setValue(((Weapon)target).getRefinementRank());
-        mainValue.setText("" + target.getPrimaryValue());
-
+        mainValue.setValue(target.getPrimaryValue());
         baseATK.setValue(((Weapon)target).getBaseATK());
     }
 
@@ -86,7 +85,7 @@ public class ModifyWeaponGUI extends ModifyEquipmentGUI implements ActionListene
 
         weaponDatabase.replaceRecord(fileIndex, newWeapon.toString());
 
-        MainFrame.navigate(6, 2);
+        MainFrame.navigate(6, 2, null);
     }
 
     private void deleteEquipment(){
