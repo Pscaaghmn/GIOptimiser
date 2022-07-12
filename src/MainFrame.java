@@ -1,6 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
-import java.util.Arrays;
 
 public class MainFrame extends JFrame{
     private static JPanel[] allPanels;
@@ -9,7 +7,7 @@ public class MainFrame extends JFrame{
         int maxHeight = 700;
 
         setBounds(0,0, 1500, maxHeight);
-        setResizable(true);
+        setResizable(false);
 
         allPanels = new JPanel[10];
         allPanels[0] = new MainMenuGUI();

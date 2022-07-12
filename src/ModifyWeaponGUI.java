@@ -63,8 +63,10 @@ public class ModifyWeaponGUI extends ModifyEquipmentGUI implements ActionListene
     protected void populateFields(){
         super.populateFields();
         itemLabels[1].setText("Refinement Rank: " + ((Weapon)target).getRefinementRank());
+        refinementRank.setValue(((Weapon)target).getRefinementRank());
         mainValue.setText("" + target.getPrimaryValue());
-        itemLabels[4].setText("Base ATK: " + ((Weapon)target).getBaseATK());
+
+        baseATK.setValue(((Weapon)target).getBaseATK());
     }
 
     private void updateComboBoxes(ActionEvent e){
