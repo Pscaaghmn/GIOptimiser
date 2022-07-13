@@ -172,7 +172,7 @@ public class ModifyArtifactGUI extends ModifyEquipmentGUI implements ActionListe
         Database values = new Database("artifact_val.txt", 20);
         attributes.deleteRecord(fileIndex);
         values.deleteRecord(fileIndex);
-        MainFrame.navigate(5,1);
+        MainFrame.navigate(5,1, null);
     }
 
     @Override

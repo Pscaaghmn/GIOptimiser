@@ -1,8 +1,10 @@
-Archaic Petra                 04 350120
-Blizzard Strayer              21 705320
-Bloodstained Chivalry         21 36088 
-Heart of Depth                40 01230 
-Heart of Depth                40 01230 
+Archaic Petra                 04<DEL!#>
+Blizzard Strayer              21<DEL!#>
+Bloodstained Chivalry         21<DEL!#>
+Heart of Depth                40<DEL!#>
+Heart of Depth                40<DEL!#>
 Tenacity of the Millelith     10 01230 
 Vermillion Hereafter          40 01230 
-Vermillion Hereafter          30 01230 
+Vermillion Hereafter          30<DEL!#>
+Crimson Witch of Flames       04 70382 
+Crimson Witch of Flames       00 01230 
