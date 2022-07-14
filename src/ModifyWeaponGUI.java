@@ -81,7 +81,17 @@ public class ModifyWeaponGUI extends ModifyEquipmentGUI implements ActionListene
 
     private void saveEquipmentChanges(){
         Database weaponDatabase = new Database("weapon_stats.txt", 53);
-        Weapon newWeapon = new Weapon((String)nameComboBox.getSelectedItem(), typeComboBox.getSelectedIndex(), Integer.parseInt(refinementRank.getText()), Integer.parseInt(baseATK.getText()), (String) mainAttributes.getSelectedItem(), Double.parseDouble(mainValue.getText()), levelSlider.getValue());
+
+        boolean isInteger;
+        int mainValueValidated = Double.parseDouble(mainValue.getText());
+
+        try {
+            mainValueValidated = Integer.parseInt()
+        } catch (NumberFormatException ex) {
+            isInteger = false;
+        }
+
+        Weapon newWeapon = new Weapon((String)nameComboBox.getSelectedItem(), typeComboBox.getSelectedIndex(), Integer.parseInt(refinementRank.getText()), Integer.parseInt(baseATK.getText()), (String) mainAttributes.getSelectedItem(), mainValueValidated, levelSlider.getValue());
 
         weaponDatabase.replaceRecord(fileIndex, newWeapon.toString());
 
