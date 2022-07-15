@@ -57,7 +57,7 @@ public class Artifact extends Equipment{
                 String.valueOf(getLevel())};
 
         String[] connectedValData = new String[]
-                {String.valueOf(getPrimaryValue()),
+                {getPrimaryValue() % 1 == 0 ? String.valueOf((int)getPrimaryValue()) : String.valueOf(getPrimaryValue()),
                 String.valueOf(secondaryValues[0]),
                 String.valueOf(secondaryValues[1]),
                 String.valueOf(secondaryValues[2]),

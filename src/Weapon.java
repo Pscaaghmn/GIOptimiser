@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Weapon extends Equipment{
     private int refinementRank;
     private int baseATK;
@@ -29,6 +31,7 @@ public class Weapon extends Equipment{
 
     public String toString(){
         int[] fieldWidths = new int[]{40, 1, 1, 3, 2, 2, 4}; //53 total
+
         String[] connectedWeaponData = new String[]
                 {getName(),
                 String.valueOf(getType()),
@@ -36,9 +39,9 @@ public class Weapon extends Equipment{
                 String.valueOf(baseATK),
                 String.valueOf(getPrimaryAttribute()),
                 String.valueOf(getLevel()),
-                String.valueOf(getPrimaryValue())};
+                getPrimaryValue() % 1 == 0 ? String.valueOf((int)getPrimaryValue()) : String.valueOf(getPrimaryValue())};
 
-        return super.toString(fieldWidths, connectedWeaponData, new int[]{}, new String[]{}, true);
+        return super.toString(fieldWidths, connectedWeaponData, null, null, true);
     }
 
     public int getRefinementRank() {

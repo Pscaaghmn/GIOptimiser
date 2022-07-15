@@ -121,12 +121,10 @@ public class ModifyArtifactGUI extends ModifyEquipmentGUI implements ActionListe
 
     private void updateMainValue(){
         if (mainAttributes.getSelectedItem() != null){
-            int attributeAsInt = Equipment.strAttToInt((String)mainAttributes.getSelectedItem());
-            String valueAsString = String.format("%1$-4s",(Artifact.getPrimaryBase()[attributeAsInt] +
-                    (levelSlider.getValue() * Artifact.getPrimaryIncrement()[attributeAsInt]))).substring(0,4);
-            if (valueAsString.charAt(3) == '.'){
-                valueAsString = valueAsString.substring(0,3);
-            }
+            DecimalFormat df = new DecimalFormat("###.##");
+            int attributeAsInt = Equipment.strAttToInt((String)df.format(mainAttributes.getSelectedItem()));
+            String valueAsString = String.valueOf(Artifact.getPrimaryBase()[attributeAsInt] +
+                    (levelSlider.getValue() * Artifact.getPrimaryIncrement()[attributeAsInt]));
             mainValue.setText(valueAsString);
         }
     }
