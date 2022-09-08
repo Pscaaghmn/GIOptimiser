@@ -2,12 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-public class InventoryGUI extends JPanel implements ActionListener {
+public class InventoryGUI extends JPanel implements ActionListener{
 
     private final boolean isArtifact;
 
