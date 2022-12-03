@@ -150,7 +150,7 @@ public class ModifyArtifactGUI extends ModifyEquipmentGUI implements ActionListe
             double[] collectedValues = new double[4];
             for (int i = 0; i < 4; i++) {
                 collectedAttributesArray[i] = (String) secondaryAttrComboBoxes[i].getSelectedItem();
-                collectedValues[i] = Double.parseDouble(secondaryValueFields[i].getText());
+                collectedValues[i] = Math.abs(Double.parseDouble(secondaryValueFields[i].getText()));
             }
 
             Database attributes = new Database("artifact_att.txt", 39);

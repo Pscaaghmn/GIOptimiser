@@ -1,5 +1,3 @@
-Blackcliff Pole                         2510 8 311000
-Festering Desire                        010  0<DEL!#>
-Amenoma Kageuchi                        032679<DEL!#>
-Blackcliff Pole                         254907<DEL!#>
-Lost Prayer to the Sacred Winds         411206<DEL!#>
+Amenoma Kageuchi                        055209 6320  
+Katsuragikiri Nagamasa                  110  0 0 0   
+Skyward Blade                           010  0<DEL!#>

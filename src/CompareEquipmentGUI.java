@@ -196,6 +196,12 @@ public class CompareEquipmentGUI extends JPanel implements ActionListener {
             secondLabels.push(new JLabel("Level: " + secondItem.getLevel()));
             secondLabels.push(new JLabel("Base ATK: " + ((Weapon)secondItem).getBaseATK()));
             secondLabels.push(new JLabel(Equipment.intAttToStr(secondItem.getPrimaryAttribute()) + ": " + secondItem.getPrimaryValue()));
+            if (((Weapon)firstItem).getBaseATK() > ((Weapon)secondItem).getBaseATK()) {
+                recommendation.setText(firstItem.getName());
+            }else{
+                recommendation.setText(secondItem.getName());
+            }
+
         }
 
         for (int i = 0; i < firstLabels.size(); i++) {

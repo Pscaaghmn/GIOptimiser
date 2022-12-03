@@ -15,7 +15,7 @@ public class CalculateArtifactGUI extends JPanel implements ActionListener {
         this.setLayout(null);
 
         JLabel mainAttributeLabel = new JLabel("Look for: ");
-        JLabel timeLabel = new JLabel("Time: ");
+        JLabel timeLabel = new JLabel("Time (days): ");
         JButton homeButton = new JButton("Home");
         JButton calculateButton = new JButton("Calculate");
         attributesComboBox = new JComboBox<>();
@@ -28,8 +28,8 @@ public class CalculateArtifactGUI extends JPanel implements ActionListener {
         mainAttributeLabel.setBounds(0,50,200,50);
         attributesComboBox.setBounds(0,100,200,50);
         pieceOptions.setBounds(200,100,200,50);
-        timeLabel.setBounds(0,150,70,50);
-        timeInDays.setBounds(70,150,70,50);
+        timeLabel.setBounds(0,150,90,50);
+        timeInDays.setBounds(90,150,70,50);
         calculateButton.setBounds(0,200,100,50);
         result.setBounds(0,250,500,50);
 
@@ -49,7 +49,7 @@ public class CalculateArtifactGUI extends JPanel implements ActionListener {
 
     private void calculateResult(){
         double expectedValue = 0;
-        int time = Integer.parseInt(timeInDays.getText().replace(",",""));
+        int time = Math.abs(Integer.parseInt(timeInDays.getText().replace(",","")));
         switch (pieceOptions.getSelectedIndex()){
             case 0,1 -> expectedValue = 0.9 * time;
             case 2 -> expectedValue = 0.9 * new double[]{0.2666,0.2666,0.2668,0.1,0.1}[attributesComboBox.getSelectedIndex()] * time;
@@ -65,7 +65,7 @@ public class CalculateArtifactGUI extends JPanel implements ActionListener {
         switch (e.getActionCommand()) {
             case "Home" -> MainFrame.navigate(9, 0);
             case "Calculate" -> {
-                if (attributesComboBox.getItemCount() > 0){
+                if (attributesComboBox.getItemCount() > 0) {
                     calculateResult();
                 }
             }

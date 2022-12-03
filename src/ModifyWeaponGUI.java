@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
@@ -82,7 +83,13 @@ public class ModifyWeaponGUI extends ModifyEquipmentGUI implements ActionListene
     private void saveEquipmentChanges(){
         Database weaponDatabase = new Database("weapon_stats.txt", 53);
 
-        Weapon newWeapon = new Weapon((String)nameComboBox.getSelectedItem(), typeComboBox.getSelectedIndex(), (int)refinementRank.getValue(), (int)baseATK.getValue(), (String) mainAttributes.getSelectedItem(), (double)mainValue.getValue(), levelSlider.getValue());
+        Weapon newWeapon = new Weapon((String)nameComboBox.getSelectedItem(),
+                typeComboBox.getSelectedIndex(),
+                Math.abs(Integer.parseInt(refinementRank.getText())),
+                Math.abs((int) Long.parseLong(baseATK.getText())),
+                (String) mainAttributes.getSelectedItem(),
+                Math.abs(Double.parseDouble(mainValue.getText())),
+                levelSlider.getValue());
 
         weaponDatabase.replaceRecord(fileIndex, newWeapon.toString());
 
@@ -100,7 +107,13 @@ public class ModifyWeaponGUI extends ModifyEquipmentGUI implements ActionListene
         switch (e.getActionCommand()) {
             case "Home" -> MainFrame.navigate(6,0);
             case "Inventory" -> MainFrame.navigate(6,2, null);
-            case "Save" -> saveEquipmentChanges();
+            case "Save" ->{
+                if(refinementRank.getText().contains(".") || Integer.parseInt(refinementRank.getText()) < 1 || Integer.parseInt(refinementRank.getText()) > 5){
+                    refinementRank.setForeground(Color.RED);
+                }else{
+                    saveEquipmentChanges();
+                }
+            }
             case "DELETE" -> deleteEquipment();
             case "comboBoxChanged" -> updateComboBoxes(e);
         }
