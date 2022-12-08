@@ -68,6 +68,7 @@ public class CompareEquipmentGUI extends JPanel implements ActionListener {
     }
 
     public void loadItems(int[] fileIndices){
+        //get equipment to compare
         this.fileIndices = fileIndices;
         if (isArtifact){
             Database attributeDatabase = new Database("artifact_att.txt",39);
@@ -91,6 +92,7 @@ public class CompareEquipmentGUI extends JPanel implements ActionListener {
     }
 
     private void populateDescriptionLabels(){
+        //all labels filled in, including comparison labels
         firstBox.removeAll();
         secondBox.removeAll();
         firstAttributePanel.removeAll();
@@ -132,6 +134,7 @@ public class CompareEquipmentGUI extends JPanel implements ActionListener {
                 unionOfAttributes.add(((Artifact)secondItem).getSecondaryAttributes()[i]);
             }
 
+            //Favours CR CD ATK%
             int usefulFirstCount = 0;
             int usefulSecondCount = 0;
             ArrayList<Integer> usefulAttributes = new ArrayList<>();
@@ -183,6 +186,7 @@ public class CompareEquipmentGUI extends JPanel implements ActionListener {
             }
 
         }else{
+            //Recommend higher base atk
             firstLabels.push(new JLabel("(" + (fileIndices[0] < 9 ? "0" : "") + (fileIndices[0]+1) + ") " + firstItem.getName()));
             firstLabels.get(0).setForeground(Color.blue);
             firstLabels.push(new JLabel("Refinement Rank: " + ((Weapon)firstItem).getRefinementRank()));

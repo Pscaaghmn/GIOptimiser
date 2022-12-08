@@ -11,6 +11,7 @@ public class AddEquipmentGUI extends JPanel implements ActionListener{
     protected final boolean isArtifact;
 
     public AddEquipmentGUI(boolean isArtifact) {
+        //Changes depending on artifact or weapon
         this.isArtifact = isArtifact;
         this.setLayout(null);
 
@@ -58,7 +59,7 @@ public class AddEquipmentGUI extends JPanel implements ActionListener{
             case "Inventory" -> MainFrame.navigate((isArtifact ? 3 : 4),(isArtifact ? 1 : 2), null);
             case "Add" -> {
                 if (isArtifact) {
-
+                    //Enter files to add artifact
                     Database attributes = new Database("artifact_att.txt", 39);
                     Database values = new Database("artifact_val.txt", 20);
                     Artifact newArtifact = new Artifact((String) nameComboBox.getSelectedItem(), typeComboBox.getSelectedIndex());
@@ -67,7 +68,7 @@ public class AddEquipmentGUI extends JPanel implements ActionListener{
                     values.appendRecord(newArtifact.toString(false));
 
                 }else{
-
+                    //Enter file to add weapon
                     Database weaponStats = new Database("weapon_stats.txt", 53);
                     Weapon newWeapon = new Weapon((String) nameComboBox.getSelectedItem(), typeComboBox.getSelectedIndex());
 
@@ -77,6 +78,7 @@ public class AddEquipmentGUI extends JPanel implements ActionListener{
             }
             case "comboBoxChanged" -> {
                 if (((JComboBox<?>) e.getSource()).getItemCount() == 5 && !isArtifact){
+                    //Changing possible weapon names from chosen weapon type
                     Database names = new Database(((String)typeComboBox.getSelectedItem()).toLowerCase() + "s.txt", 40);
                     nameComboBox.removeAllItems();
                     for (int i = 0; i < names.getRecordCount(); i++) {

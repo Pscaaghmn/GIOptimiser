@@ -46,6 +46,7 @@ public class Artifact extends Equipment{
     }
 
     public String toString(Boolean isAttribute){
+        //Compiling attribute and value data into separate string arrays
         String[] connectedAttData = new String[]
                 {getName(),
                 String.valueOf(getType()),
@@ -68,6 +69,7 @@ public class Artifact extends Equipment{
 
     @Override
     public void display(){
+        //Testing purposes only (display to console)
         System.out.println(getName());
         System.out.println(new String[]{"Flower of Life", "Plume of Death", "Sands of Eon", "Goblet of Eonothem", "Circlet of Logos"}[getType()]);
 

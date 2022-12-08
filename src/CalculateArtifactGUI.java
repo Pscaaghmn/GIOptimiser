@@ -11,6 +11,7 @@ public class CalculateArtifactGUI extends JPanel implements ActionListener {
     private final JLabel result;
     private final JComboBox<String> pieceOptions;
     private final JComboBox<String> attributesComboBox;
+
     public CalculateArtifactGUI(){
         this.setLayout(null);
 
@@ -48,6 +49,7 @@ public class CalculateArtifactGUI extends JPanel implements ActionListener {
     }
 
     private void calculateResult(){
+        //Output expected number of artifacts and expected time to get one of artifact.
         double expectedValue = 0;
         int time = Math.abs(Integer.parseInt(timeInDays.getText().replace(",","")));
         switch (pieceOptions.getSelectedIndex()){
@@ -66,10 +68,12 @@ public class CalculateArtifactGUI extends JPanel implements ActionListener {
             case "Home" -> MainFrame.navigate(9, 0);
             case "Calculate" -> {
                 if (attributesComboBox.getItemCount() > 0) {
+                    //only if attribute selected
                     calculateResult();
                 }
             }
             case "comboBoxChanged" -> {
+                //Changing attribute options given artifact type
                 if (e.getSource() == pieceOptions){
                     String[] available;
 
