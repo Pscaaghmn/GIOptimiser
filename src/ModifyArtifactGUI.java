@@ -59,6 +59,7 @@ public class ModifyArtifactGUI extends ModifyEquipmentGUI implements ActionListe
     }
 
     public void importEquipment(int fileIndex){
+        //Access target equipment from file data and import
         this.fileIndex = fileIndex;
         Database attributesDatabase = new Database("artifact_att.txt", 39);
         Database valuesDatabase = new Database("artifact_val.txt", 20);
@@ -68,6 +69,7 @@ public class ModifyArtifactGUI extends ModifyEquipmentGUI implements ActionListe
     }
 
     protected void populateFields(){
+        //Preset combo boxes and labels to equipment values
         super.populateFields();
         itemLabels[1].setText("Piece: " + Artifact.getTypes()[target.getType()]);
 
@@ -83,6 +85,7 @@ public class ModifyArtifactGUI extends ModifyEquipmentGUI implements ActionListe
     }
 
     private void updateComboBoxes(ActionEvent e){
+        //Change possible combo box options depending on type selected
         if (e.getSource() == typeComboBox) {
 
             String[] available;
@@ -104,6 +107,7 @@ public class ModifyArtifactGUI extends ModifyEquipmentGUI implements ActionListe
         }else if(e.getSource() == mainAttributes && secondaryAttrComboBoxes[0].getItemCount() > 0){
 
             for (int i = 0; i < 4; i++) {
+                //Remove selected main attribute from possible secondary attribute options
                 secondaryAttrComboBoxes[i].removeAllItems();
                 String[] available = Arrays.stream(new String[]{"ATK", "ATK%", "DEF", "DEF%", "HP", "HP%", "Crit Rate", "Crit Damage", "Elemental Mastery", "Energy Recharge"})
                         .filter(a -> !a.equals(mainAttributes.getSelectedItem())).toArray(String[]::new);
@@ -120,6 +124,7 @@ public class ModifyArtifactGUI extends ModifyEquipmentGUI implements ActionListe
     }
 
     private void updateMainValue(){
+        //Change main attribute value real time
         if (mainAttributes.getSelectedItem() != null){
             DecimalFormat df = new DecimalFormat("###.##");
             int attributeAsInt = Equipment.strAttToInt((String) mainAttributes.getSelectedItem());
@@ -130,12 +135,14 @@ public class ModifyArtifactGUI extends ModifyEquipmentGUI implements ActionListe
     }
 
     private void saveEquipmentChanges(){
+        //Save changes to file
         ArrayList<Object> collectedAttributes = new ArrayList<>();
 
         for (int i = 0; i < 4; i++) {
                 collectedAttributes.add(secondaryAttrComboBoxes[i].getSelectedItem());
         }
 
+        //Validate - check for duplicates
         Set<Object> setOfAttributes = new HashSet<>(collectedAttributes);
         if (collectedAttributes.size() > setOfAttributes.size()) {
             for (int i = 0; i < setOfAttributes.size(); i++) {
@@ -166,6 +173,7 @@ public class ModifyArtifactGUI extends ModifyEquipmentGUI implements ActionListe
     }
 
     private void deleteEquipment(){
+        //Delete artifact from inventory
         Database attributes = new Database("artifact_att.txt", 39);
         Database values = new Database("artifact_val.txt", 20);
         attributes.deleteRecord(fileIndex);

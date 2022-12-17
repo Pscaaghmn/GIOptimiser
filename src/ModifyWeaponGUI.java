@@ -54,6 +54,7 @@ public class ModifyWeaponGUI extends ModifyEquipmentGUI implements ActionListene
     }
 
     public void importEquipment(int fileIndex){
+        //Access target equipment from file data and import
         this.fileIndex = fileIndex;
         Database weaponStatsDatabase = new Database("weapon_stats.txt",53);
         target = new Weapon(weaponStatsDatabase.getRecord(fileIndex));
@@ -62,6 +63,7 @@ public class ModifyWeaponGUI extends ModifyEquipmentGUI implements ActionListene
     }
 
     protected void populateFields(){
+        //Preset combo boxes and labels to equipment values
         super.populateFields();
         itemLabels[1].setText("Refinement Rank: " + ((Weapon)target).getRefinementRank());
         refinementRank.setValue(((Weapon)target).getRefinementRank());
@@ -70,6 +72,7 @@ public class ModifyWeaponGUI extends ModifyEquipmentGUI implements ActionListene
     }
 
     private void updateComboBoxes(ActionEvent e){
+        //Change possible combo box options depending on type selected
         if (e.getSource() == typeComboBox) {
 
             Database names = new Database(((String) Objects.requireNonNull(typeComboBox.getSelectedItem())).toLowerCase() + "s.txt", 40);
@@ -81,22 +84,29 @@ public class ModifyWeaponGUI extends ModifyEquipmentGUI implements ActionListene
     }
 
     private void saveEquipmentChanges(){
-        Database weaponDatabase = new Database("weapon_stats.txt", 53);
+        //Save changes to file
+        //Validate - check for impossible values of refinement rank
+        if(refinementRank.getText().contains(".") || Integer.parseInt(refinementRank.getText()) < 1 || Integer.parseInt(refinementRank.getText()) > 5){
+            refinementRank.setForeground(Color.RED);
+        }else {
+            Database weaponDatabase = new Database("weapon_stats.txt", 53);
 
-        Weapon newWeapon = new Weapon((String)nameComboBox.getSelectedItem(),
-                typeComboBox.getSelectedIndex(),
-                Math.abs(Integer.parseInt(refinementRank.getText())),
-                Math.abs((int) Long.parseLong(baseATK.getText())),
-                (String) mainAttributes.getSelectedItem(),
-                Math.abs(Double.parseDouble(mainValue.getText())),
-                levelSlider.getValue());
+            Weapon newWeapon = new Weapon((String) nameComboBox.getSelectedItem(),
+                    typeComboBox.getSelectedIndex(),
+                    Math.abs(Integer.parseInt(refinementRank.getText())),
+                    Math.abs((int) Long.parseLong(baseATK.getText())),
+                    (String) mainAttributes.getSelectedItem(),
+                    Math.abs(Double.parseDouble(mainValue.getText())),
+                    levelSlider.getValue());
 
-        weaponDatabase.replaceRecord(fileIndex, newWeapon.toString());
+            weaponDatabase.replaceRecord(fileIndex, newWeapon.toString());
 
-        MainFrame.navigate(6, 2, null);
+            MainFrame.navigate(6, 2, null);
+        }
     }
 
     private void deleteEquipment(){
+        //Delete weapon from inventory
         Database weaponDatabase = new Database("weapon_stats.txt", 53);
         weaponDatabase.deleteRecord(fileIndex);
         MainFrame.navigate(6,2, null);
@@ -107,13 +117,7 @@ public class ModifyWeaponGUI extends ModifyEquipmentGUI implements ActionListene
         switch (e.getActionCommand()) {
             case "Home" -> MainFrame.navigate(6,0);
             case "Inventory" -> MainFrame.navigate(6,2, null);
-            case "Save" ->{
-                if(refinementRank.getText().contains(".") || Integer.parseInt(refinementRank.getText()) < 1 || Integer.parseInt(refinementRank.getText()) > 5){
-                    refinementRank.setForeground(Color.RED);
-                }else{
-                    saveEquipmentChanges();
-                }
-            }
+            case "Save" -> saveEquipmentChanges();
             case "DELETE" -> deleteEquipment();
             case "comboBoxChanged" -> updateComboBoxes(e);
         }

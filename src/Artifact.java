@@ -10,6 +10,7 @@ public class Artifact extends Equipment{
     private static final int[] valFieldWidths = new int[]{4, 4, 4, 4, 4};
 
     public Artifact(String set, int piece, String primaryAttributeString, String[] secondaryAttributesString, double[] secondaryValues, int level) {
+        //all attributes are known
         super(set,
                 piece,
                 Equipment.strAttToInt(primaryAttributeString),
@@ -20,6 +21,7 @@ public class Artifact extends Equipment{
     }
 
     public Artifact(String set, int piece) {
+        //default
         super(set, piece,0,0,0);
         secondaryAttributes = new int[]{0,1,2,3};
         this.secondaryValues = new double[]{0,0,0,0};
@@ -81,6 +83,7 @@ public class Artifact extends Equipment{
         }
     }
 
+    //Accessor & mutator methods
     public static String[] getTypes(){
         return new String[]{"Flower","Plume","Sands","Goblet","Circlet"};
     }

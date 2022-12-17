@@ -222,6 +222,7 @@ public class CompareEquipmentGUI extends JPanel implements ActionListener {
     }
 
     private String higherValueArtifact(int comparisonAttribute){
+        //State which of the two artifacts has the higher value of the given attribute.
         ArrayList<Integer> firstAttributes = new ArrayList<>();
         ArrayList<Integer> secondAttributes = new ArrayList<>();
 

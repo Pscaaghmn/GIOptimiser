@@ -1,6 +1,7 @@
 import javax.swing.*;
 
 public class MainFrame extends JFrame{
+    //Contains all panels/screens of the application
     private static JPanel[] allPanels;
 
     public MainFrame(){
@@ -36,11 +37,13 @@ public class MainFrame extends JFrame{
     }
 
     public static void navigate(int hidePanel, int showPanel){
+        //Move from hidePanel to showPanel
         allPanels[hidePanel].setVisible(false);
         allPanels[showPanel].setVisible(true);
     }
 
     public static void navigate(int hidePanel, int showPanel, int[] loadData) {
+        //Move between panels carrying over data
         if (loadData == null){
             ((InventoryGUI) allPanels[showPanel]).loadItems();
         }else if (loadData.length == 1) {

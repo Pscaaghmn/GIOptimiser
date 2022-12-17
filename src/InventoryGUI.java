@@ -2,14 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Stream;
 
 public class InventoryGUI extends JPanel implements ActionListener{
-
+    //GUI for both Artifact and Weapon inventories
     private final boolean isArtifact;
 
     private ArrayList<Equipment> items;
@@ -90,6 +89,7 @@ public class InventoryGUI extends JPanel implements ActionListener{
     }
 
     public void loadItems(){
+        //Loads appropriate file data into inventory
         Database attributeDatabase;
         Database valueDatabase;
         if (isArtifact){
@@ -111,6 +111,7 @@ public class InventoryGUI extends JPanel implements ActionListener{
                 items.add(new Weapon(attributeDatabase.getRecord(i)));
             }
 
+            //Creating new buttons
             itemButtons.add(new JButton((i < 9 ? "0" : "") + (i+1) + ": " + items.get(i).getName()));
             itemsBox.add(itemButtons.get(i));
             itemButtons.get(i).addActionListener(this);
@@ -126,9 +127,11 @@ public class InventoryGUI extends JPanel implements ActionListener{
     }
 
     private void sort(String sortOption){
+        //Sorts the equipment in the inventory
         ArrayList<String> stringsList = new ArrayList<>();
         ArrayList<Double> doublesList = new ArrayList<>();
         switch (sortOption){
+            //Adding values to the correct list (depending on the attribute's data type)
             case "Name" -> {
                 for (Equipment item : items) {
                     stringsList.add(item.getName());
@@ -262,6 +265,7 @@ public class InventoryGUI extends JPanel implements ActionListener{
     }
 
     private void populateDescriptionLabels(int buttonIndex){
+        //Descriptions for selected equipment appear on the right
         labelBox.removeAll();
         itemLabels.clear();
         if (isArtifact){

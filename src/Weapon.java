@@ -6,18 +6,21 @@ public class Weapon extends Equipment{
     private static final int[] fieldWidths = new int[]{40, 1, 1, 3, 2, 2, 4}; //53 total;
 
     public Weapon(String name, int weaponType, int refinementRank, int baseATK, String attribute, double value, int level) {
+        //all attributes are known
         super(name,weaponType,Equipment.strAttToInt(attribute),value,level);
         this.refinementRank = refinementRank;
         this.baseATK = baseATK;
     }
 
     public Weapon(String name, int weaponType) {
+        //default
         super(name,weaponType,0,0,0);
         refinementRank = 1;
         baseATK = 0;
     }
 
     public Weapon(String record){
+        //Constructor using record string
         String[] fields = Database.recordToArray(record, fieldWidths);
 
         setName(fields[0].trim());
@@ -30,6 +33,7 @@ public class Weapon extends Equipment{
     }
 
     public String toString(){
+        //Compiling data into string array
         int[] fieldWidths = new int[]{40, 1, 1, 3, 2, 2, 4}; //53 total
 
         String[] connectedWeaponData = new String[]
@@ -43,6 +47,8 @@ public class Weapon extends Equipment{
 
         return super.toString(fieldWidths, connectedWeaponData, null, null, true);
     }
+
+    //Accessor & mutator methods
 
     public int getRefinementRank() {
         return refinementRank;

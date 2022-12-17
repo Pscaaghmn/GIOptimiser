@@ -42,6 +42,7 @@ public class ModifyEquipmentGUI extends AddEquipmentGUI implements ActionListene
     }
 
     protected void populateFields(){
+        //Used for both types of equipment
         itemLabels[0].setText("(" + (fileIndex < 9 ? "0" : "") + (fileIndex+1) + ") " + target.getName());
         typeComboBox.setSelectedIndex(target.getType());
         nameComboBox.setSelectedItem(target.getName());
